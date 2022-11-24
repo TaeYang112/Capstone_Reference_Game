@@ -52,6 +52,9 @@
                 case 2:
                     answer = "X";
                     break;
+                case -1:
+                    answer = "정답을 골라주세요!";
+                    break;
                 default:
                     answer = "";
                     break;

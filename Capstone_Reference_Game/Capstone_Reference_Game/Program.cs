@@ -14,15 +14,17 @@ namespace Capstone_Reference_Game
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             
+            
             MultipleQuizForm form = new MultipleQuizForm(false);
             form.SetTitle("2 + 2 X 2의 답은?");
-            form.SetQuestions(new List<string> {"6","8","7","2","1"});
+            form.SetQuestions(new List<string> {"6","8"});
             form.SetTargetTime(30);
             form.Start();
             
+
             /*
             OXQuizForm form = new OXQuizForm(false);
-            form.SetTitle("2 + 2 X 2의 답은 8이다.ㄴㅇㅁㄹㄴㅇㄹㅇㄴㄹㄴㅇㄹㅇㄴㅇㄴㅇㄹㅇㄹㄹ");
+            form.SetTitle("2 + 2 X 2의 답은 8이다.");
             form.SetTargetTime(30);
             form.Start();
             */

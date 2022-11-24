@@ -11,8 +11,11 @@ namespace Capstone_Reference_Game
         // 유저 캐릭터
         protected ClientCharacter? userCharacter;
 
+        // 유저 캐릭터 위에 있는 화살표
+        Bitmap arrow = Properties.Resources.arrow;
+
         // 클라이언트 매니저 ( 유저 캐릭터를 제외한 나머지 클라이언트 제어 )
-        protected ClientManager clientManager = new ClientManager();
+        public ClientManager clientManager { get; } =  new ClientManager();
 
         // 매 프레임마다 Update를 호출시키는 타이머
         private System.Threading.Timer UpdateTimer;
@@ -66,12 +69,14 @@ namespace Capstone_Reference_Game
             progressBar.OnTimerStop += OnTimerStop;
         }
 
+        // 비관리 메모리 해제
         protected virtual void CustomDispose(object? sender, EventArgs e)
         {
             FPSTimer.Dispose();
             UpdateTimer.Dispose();
             progressBar.Dispose();
             userCharacter?.Dispose();
+            arrow.Dispose();
         }
 
         private void QuizForm_Load(object sender, EventArgs e)
@@ -163,6 +168,11 @@ namespace Capstone_Reference_Game
                 {
                     // 자신 클라이언트 출력
                     userCharacter!.Draw(e.Graphics);
+
+                    Point arrowPoint = new Point(userCharacter.Location.X + userCharacter.Size.Width/2 - arrow.Width/2, userCharacter.Location.Y - 20);
+
+                    // 캐릭터 위에 화살표 표시
+                    e.Graphics.DrawImage(arrow, arrowPoint);
 
                     // 자신이 고른 답 표시
                     lbl_MyAnswer.Text = GetAnswerString();

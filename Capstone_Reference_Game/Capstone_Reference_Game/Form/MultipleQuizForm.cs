@@ -52,7 +52,8 @@ namespace Capstone_Reference_Game.Form
         protected override string GetAnswerString()
         {
             int answerInt = GetAnswer();
-            if (answerInt < 0) return "";
+            if (answerInt == -1) return "정답을 골라주세요!";
+            else if(answerInt == -2) return "";
 
             return questions[answerInt - 1].Text;
         }

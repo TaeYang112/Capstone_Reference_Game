@@ -36,6 +36,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Capstone_Reference_Game.Properties.Resources.MultipleQuizeBackground;
             this.ClientSize = new System.Drawing.Size(1024, 600);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MultipleQuizForm";
             this.Text = "MultipleQuizForm";
             this.ResumeLayout(false);
