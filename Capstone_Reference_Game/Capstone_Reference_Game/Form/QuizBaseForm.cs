@@ -201,12 +201,7 @@ namespace Capstone_Reference_Game
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // 관전자 모드일경우 키처리 X
-            if (Spectator)
-            {
-                return base.ProcessCmdKey(ref msg, keyData);
-            }
-
-            if (IsStart)
+            if (IsStart && Spectator == false)
             {
                 switch (keyData)
                 {
@@ -253,9 +248,7 @@ namespace Capstone_Reference_Game
         private void Form_KeyUp(object sender, KeyEventArgs e)
         {
             // 관전자 일경우 키처리 X
-            if(Spectator) return;
-
-            if (IsStart)
+            if (IsStart && Spectator == false)
             {
                 switch (e.KeyData)
                 {
@@ -300,9 +293,17 @@ namespace Capstone_Reference_Game
         // 폼의 포커스가 풀리면 ( 알트 탭, 다른 윈도우 선택시 ) 이벤트 발생
         private void Form_Deactivate(object sender, EventArgs e)
         {
-            // 입력중인 키 모두 해제
+            if (Spectator == false)
+            {
+                // 입력중인 키 모두 해제
 
-            // 모든 키 해제 전송
+                userCharacter!.DownKeyDown = false;
+                userCharacter.UpKeyDown = false;
+                userCharacter.LeftKeyDown = false;
+                userCharacter.RightKeyDown = false;
+
+                // 모든 키 해제 전송
+            }
         }
 
         #endregion Input Process
