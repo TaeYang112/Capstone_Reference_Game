@@ -1,6 +1,6 @@
-﻿namespace Capstone_Reference_Game
+﻿namespace Capstone_Reference_Game.Form
 {
-    partial class OXQuizForm
+    partial class MultipleQuizForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,17 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // OXQuizForm
+            // MultipleQuizForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Capstone_Reference_Game.Properties.Resources.OXBackground;
+            this.BackgroundImage = global::Capstone_Reference_Game.Properties.Resources.MultipleQuizeBackground;
             this.ClientSize = new System.Drawing.Size(1024, 600);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "OXQuizForm";
-            this.Text = "OXQuizForm";
+            this.Name = "MultipleQuizForm";
+            this.Text = "MultipleQuizForm";
             this.ResumeLayout(false);
 
         }

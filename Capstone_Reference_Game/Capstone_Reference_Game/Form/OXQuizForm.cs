@@ -1,45 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Capstone_Reference_Game
+﻿namespace Capstone_Reference_Game
 {
     // 가로 1024  /  세로 600
     public partial class OXQuizForm : QuizBaseForm
     {
-        public OXQuizForm()
+        public OXQuizForm(bool isSpectator) : base(isSpectator)
         {
             InitializeComponent();
         }
 
-        private void OXQuizForm_Load(object sender, EventArgs e)
+        public OXQuizForm() : base(false)
         {
-            lbl_ProblemTitle.Font = new Font(ResourceLibrary.Families[0], 25, FontStyle.Regular);
-            lbl_ProblemTitle.Text = "1. \"2 + 2 X 2\" 의 답은 8 이다. 테스트테스트테스트테스트테스테스테트테트스트";
+            InitializeComponent();
         }
 
-        public void SetTitle(string title)
+        // 몇번 답을 골랐는지 반환
+        public override int GetAnswer()
         {
-            lbl_ProblemTitle.Text = title;
+            // 관전자 일경우 -2 반환
+            if(Spectator)
+            {
+                return -2;
+            }
+
+            // 캐릭터 중앙 x좌표
+            int Character_X = userCharacter!.Location.X + userCharacter.Size.Width / 2;
+
+            // 만약 캐릭터가 화면의 절반보다 왼쪽에 있으면 1번( O ) 아니면 2번( X ) 가운데 라인은 -1을 보냄
+            if (Character_X < ClientRectangle.Width / 2 - 15)
+            {
+                return 1;
+            }
+            else if (Character_X < ClientRectangle.Width / 2 + 15)
+            {
+                return -1;
+            }
+            else
+            {
+                return 2;
+            }
         }
 
-        private void OXQuizForm_Paint(object sender, PaintEventArgs e)
+        // 자신이 고른 정답 표시
+        protected override string GetAnswerString()
         {
-            userCharacter.Draw(e.Graphics);
+            string answer = string.Empty;
+            switch(GetAnswer())
+            {
+                case 1:
+                    answer = "O";
+                    break;
+                case 2:
+                    answer = "X";
+                    break;
+                default:
+                    answer = "";
+                    break;
+            }
+            return answer;
         }
 
-        protected override void Update(object? sender)
-        {
-            userCharacter.MoveWithKeyDown();
-            base.Update(sender);
-        }
 
-        
     }
 }

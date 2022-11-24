@@ -1,10 +1,11 @@
 ﻿
 using System.Numerics;
 
-namespace Capstone_Reference_Game.Object
+namespace Capstone_Reference_Game.Client
 {
-    public class ClientCharacter : IPaintable
+    public class ClientCharacter : IPaintable, IDisposable
     {
+        #region Basic
         // 클라이언트 구별을 위한 유일 키
         public int Key { get; }
 
@@ -12,10 +13,10 @@ namespace Capstone_Reference_Game.Object
 
         // 그래픽을 위한 멤버
         public Point Location { get; set; }
-        private Size size = new Size(42, 35);
+        public Size Size { get; set; }
         private Image? image;
-        private Image? leftImage;
-        private Image? rightImage;
+        private bool isLookRight = true;
+        private bool doLookRight = true;
 
         // 스레드
 
@@ -25,58 +26,93 @@ namespace Capstone_Reference_Game.Object
         public bool RightKeyDown { get; set; } = false;
         public bool UpKeyDown { get; set; } = false;
         public bool DownKeyDown { get; set; } = false;
+        
 
+        // Dispose 재호출 방지를 위한 플래그 변수
+        private bool _disposed = false;
 
         public ClientCharacter(int key, int skinNum)
         {
+            Size = new Size(42, 35);
             this.Speed = 4;
             this.Key = key;
             SetSkin(skinNum);
         }
 
+        ~ClientCharacter() => Dispose(false);
+
+        // 사용자가 원할 때 메모리를 해제할 수 있는 함수
+        public void Dispose()
+        {
+            Dispose(true);
+
+            // Dispose패턴을 통해 메모리를 해제했기 때문에 소멸자 호출을 막음
+            GC.SuppressFinalize(this);
+        }
+
+        // Dispose 패턴
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // 관리 메모리 해제
+            }
+
+            // 비관리 메모리 해제
+            image!.Dispose();
+
+            _disposed = true;
+        }
+
+        #endregion Basic
+
         private void SetSkin(int skinNum)
         {
-            Bitmap? tempImage;
             switch (skinNum % 8)
             {
                 case 0:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Red;
+                    image = Properties.Resources.Red;
                     break;
                 case 1:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Orange;
+                    image = Properties.Resources.Orange;
                     break;
                 case 2:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Yellow;
+                    image = Properties.Resources.Yellow;
                     break;
                 case 3:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Green;
+                    image = Properties.Resources.Green;
                     break;
                 case 4:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Blue;
+                    image = Properties.Resources.Blue;
                     break;
                 case 5:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Purple;
+                    image = Properties.Resources.Purple;
                     break;
                 case 6:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Pink;
+                    image = Properties.Resources.Pink;
                     break;
                 case 7:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Gray;
+                    image = Properties.Resources.Gray;
                     break;
                 default:
-                    tempImage = Capstone_Reference_Game.Properties.Resources.Red;
+                    image = Properties.Resources.Red;
                     break;
             }
-            rightImage = new Bitmap(tempImage, size);
-            leftImage = new Bitmap(tempImage, size);
-            leftImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
-
-            image = rightImage;
         }
 
         public void Draw(Graphics g)
         {
-            g.DrawImage(image!, new Rectangle(Location, size));
+            if (doLookRight != isLookRight)
+            {
+                image!.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                isLookRight = doLookRight;
+            }
+            g.DrawImage(image!, new Rectangle(Location, Size));
         }
 
         public void MoveWithKeyDown()
@@ -108,13 +144,13 @@ namespace Capstone_Reference_Game.Object
             }
 
             // 움직이는 방향에 따라 이미지 설정
-            if(velocity.X < 0)
+            if (velocity.X < 0)
             {
-                image = leftImage;
+                doLookRight = false;
             }
-            else if(velocity.X > 0)
+            else if (velocity.X > 0)
             {
-                image = rightImage;
+                doLookRight = true;
             }
 
             // 피타고라스 정리에 따라 대각선으로 이동할 때 더빠르므로 정규화를 통해 속도 조정
@@ -122,7 +158,18 @@ namespace Capstone_Reference_Game.Object
             if (velSize == 0) return;
 
             PointF normalVel = new PointF(velocity.X / velSize, velocity.Y / velSize);
-            Location = new Point(Location.X + (int)Math.Round(normalVel.X * Speed), Location.Y + (int)Math.Round(normalVel.Y * Speed));
+            Point tempPoint = new Point(Location.X + (int)Math.Round(normalVel.X * Speed), Location.Y + (int)Math.Round(normalVel.Y * Speed));
+
+
+            // 맵 밖에 나가지 못하게 조정
+            if (tempPoint.X < 0) tempPoint.X = 0;
+            else if (tempPoint.X > 1024 - Size.Width) tempPoint.X = 1024 - Size.Width;
+
+            if(tempPoint.Y < 120) tempPoint.Y = 120;
+            else if(tempPoint.Y > 600 - Size.Height) tempPoint.Y = 600 - Size.Height;
+
+            Location = tempPoint;
         }
+
     }
 }

@@ -8,6 +8,9 @@ namespace Capstone_Reference_Game
 {
     internal interface IPaintable
     {
+        public Point Location { get; set; }
+        public Size Size { get; set; }
+
         public void Draw(Graphics g);
     }
 }

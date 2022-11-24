@@ -1,3 +1,5 @@
+using Capstone_Reference_Game.Form;
+
 namespace Capstone_Reference_Game
 {
     internal static class Program
@@ -11,7 +13,21 @@ namespace Capstone_Reference_Game
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new OXQuizForm());
+            
+            MultipleQuizForm form = new MultipleQuizForm(false);
+            form.SetTitle("2 + 2 X 2의 답은?");
+            form.SetQuestions(new List<string> {"6","8","7","2","1"});
+            form.SetTargetTime(30);
+            form.Start();
+            
+            /*
+            OXQuizForm form = new OXQuizForm(false);
+            form.SetTitle("2 + 2 X 2의 답은 8이다.ㄴㅇㅁㄹㄴㅇㄹㅇㄴㄹㄴㅇㄹㅇㄴㅇㄴㅇㄹㅇㄹㄹ");
+            form.SetTargetTime(30);
+            form.Start();
+            */
+
+            Application.Run(form);
         }
     }
 }
