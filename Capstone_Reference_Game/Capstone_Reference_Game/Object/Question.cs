@@ -17,7 +17,30 @@ namespace Capstone_Reference_Game.Object
         private Font font = new Font(ResourceLibrary.Families[0], 25, FontStyle.Regular);
         private StringFormat sf = new StringFormat();
         private Pen pen = new Pen(Color.Black,3);
-        public string Text { get; set; } = string.Empty;
+
+        // 텍스트
+        private string _text = string.Empty;
+        public string Text 
+        { 
+            get
+            {
+                return _text;
+            } 
+            set
+            {
+                _text = value;
+                if (value.Length > 20 && value.Length <= 40)
+                {
+                    font.Dispose();
+                    font = new Font(ResourceLibrary.Families[0], 20, FontStyle.Regular);
+                }
+                else if(value.Length > 40)
+                {
+                    font.Dispose();
+                    font = new Font(ResourceLibrary.Families[0], 15, FontStyle.Regular);
+                }
+            } 
+        }
 
         public Question(Point location, Size size)
         {

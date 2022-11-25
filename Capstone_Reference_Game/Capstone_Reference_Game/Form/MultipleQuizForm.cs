@@ -67,19 +67,71 @@ namespace Capstone_Reference_Game.Form
             // 초기화
             questions = new Question[count];
 
-            // 각 문제사이의 간격
-            int interval = (480 - 80 * count) / (count + 1);
-
-            int nextY = 120 + interval;
-            Size tmp_Size = new Size(800, 80);
-
-            for (int i = 0; i < count; i++)
+            // 문제의 개수가 짝수일 때 정사각형으로 배치
+            if(count % 2 == 0)
             {
-                Question question = new Question(new Point(112,nextY), tmp_Size);
-                question.Text = context[i];
+                if(count == 2)
+                {
+                    // 한 변의 길이
+                    int sideDist = 300;
 
-                nextY += 80 + interval;
-                questions[i] = question;
+                    // 중앙으로 부터 떨어진 거리
+                    int distFromCenter = 80;
+
+                    // y좌표
+                    int y = 480 / 2 - sideDist / 2 + 120;
+
+                    for (int i = 0; i < 2; i++)
+                    {
+                        int sign = ((i % 2) == 0 ? -1 : 1);
+                        int x = 512 + ( (i + 1) % 2 * sideDist + distFromCenter ) * sign;
+
+                        questions[i] = new Question(new Point(x, y), new Size(sideDist, sideDist));
+                        questions[i].Text = context[i];
+                    }
+                }
+                else
+                {
+                    // 한 변의 길이
+                    int sideDist = 190;
+
+                    // 중앙 좌표
+                    Point center = new Point(512, 360);
+
+                    // 중앙으로 부터 떨어진 거리
+                    int distFromCenter = 20;
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int y, x;
+                        if(i < 2) y = center.Y - distFromCenter - sideDist;
+                        else y = center.Y + distFromCenter;
+
+                        if(i % 2 == 1) x = center.X - distFromCenter - sideDist;
+                        else x = center.X + distFromCenter;
+
+                        questions[i] = new Question(new Point(x, y), new Size(sideDist, sideDist));
+                        questions[i].Text = context[i];
+                    }
+                }
+            }
+            // 홀수일 때 긴 직사각형으로 배치
+            else
+            {
+                // 각 문제사이의 간격
+                int interval = (480 - 80 * count) / (count + 1);
+
+                int nextY = 120 + interval;
+                Size tmp_Size = new Size(800, 80);
+
+                for (int i = 0; i < count; i++)
+                {
+                    Question question = new Question(new Point(112, nextY), tmp_Size);
+                    question.Text = context[i];
+
+                    nextY += 80 + interval;
+                    questions[i] = question;
+                }
             }
         }
 

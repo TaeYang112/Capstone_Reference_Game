@@ -30,6 +30,9 @@ namespace Capstone_Reference_Game
         // 타이머 프로그레스바
         protected TimerProgress progressBar = new TimerProgress(new Point(0, 0), new Size(1024, 20));
 
+        // 자신이 고른 정답을 보여주는 라벨
+        private CustomLabel? lbl_MyAnswer;
+
         // 관전자 모드 여부
         public bool Spectator { get; }
 
@@ -44,8 +47,10 @@ namespace Capstone_Reference_Game
             this.Spectator = isSpectator;
             if(isSpectator == false)
             {
-               userCharacter = new ClientCharacter(0, 1);
-               arrow = Properties.Resources.arrow;
+                userCharacter = new ClientCharacter(0, 1);
+                arrow = Properties.Resources.arrow;
+                lbl_MyAnswer = new CustomLabel(new Point(0, 100), new Size(1024, 20));
+                lbl_MyAnswer.Font = new Font(ResourceLibrary.Families[0], 15, FontStyle.Regular);
             }
 
             // 최적화
@@ -76,15 +81,19 @@ namespace Capstone_Reference_Game
             FPSTimer.Dispose();
             UpdateTimer.Dispose();
             progressBar.Dispose();
-            userCharacter?.Dispose();
-            arrow?.Dispose();
+            if(Spectator == false)
+            {
+                userCharacter!.Dispose();
+                arrow!.Dispose();
+                lbl_MyAnswer!.Dispose();
+            }
+            
         }
 
         private void QuizForm_Load(object sender, EventArgs e)
         {
             UpdateTimer.Change(0, 15);
             lbl_ProblemTitle.Font = new Font(ResourceLibrary.Families[0], 25, FontStyle.Regular);
-            lbl_MyAnswer.Font = new Font(ResourceLibrary.Families[0], 15, FontStyle.Regular);
         }
 
         #endregion
@@ -167,6 +176,10 @@ namespace Capstone_Reference_Game
                 // 관전 모드가 아니라면
                 if (Spectator == false)
                 {
+                    // 자신이 고른 답 표시
+                    lbl_MyAnswer!.Text = GetAnswerString();
+                    lbl_MyAnswer.Draw(e.Graphics);
+
                     // 자신 클라이언트 출력
                     userCharacter!.Draw(e.Graphics);
 
@@ -174,9 +187,6 @@ namespace Capstone_Reference_Game
 
                     // 캐릭터 위에 화살표 표시
                     e.Graphics.DrawImage(arrow, arrowPoint);
-
-                    // 자신이 고른 답 표시
-                    lbl_MyAnswer.Text = GetAnswerString();
                 }
             }
         }

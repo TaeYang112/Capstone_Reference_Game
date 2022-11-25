@@ -17,7 +17,7 @@ namespace Capstone_Reference_Game
             
             MultipleQuizForm form = new MultipleQuizForm(false);
             form.SetTitle("2 + 2 X 2의 답은?");
-            form.SetQuestions(new List<string> {"6","8"});
+            form.SetQuestions(new List<string> {"이태양의 이름은 이태양이다. 그러나다다","8","4","1"});
             form.SetTargetTime(30);
             form.Start();
             
