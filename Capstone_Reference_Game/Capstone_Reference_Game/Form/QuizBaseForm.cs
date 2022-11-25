@@ -12,7 +12,7 @@ namespace Capstone_Reference_Game
         protected ClientCharacter? userCharacter;
 
         // 유저 캐릭터 위에 있는 화살표
-        Bitmap arrow = Properties.Resources.arrow;
+        private Bitmap? arrow;
 
         // 클라이언트 매니저 ( 유저 캐릭터를 제외한 나머지 클라이언트 제어 )
         public ClientManager clientManager { get; } =  new ClientManager();
@@ -45,6 +45,7 @@ namespace Capstone_Reference_Game
             if(isSpectator == false)
             {
                userCharacter = new ClientCharacter(0, 1);
+               arrow = Properties.Resources.arrow;
             }
 
             // 최적화
@@ -76,7 +77,7 @@ namespace Capstone_Reference_Game
             UpdateTimer.Dispose();
             progressBar.Dispose();
             userCharacter?.Dispose();
-            arrow.Dispose();
+            arrow?.Dispose();
         }
 
         private void QuizForm_Load(object sender, EventArgs e)
@@ -169,7 +170,7 @@ namespace Capstone_Reference_Game
                     // 자신 클라이언트 출력
                     userCharacter!.Draw(e.Graphics);
 
-                    Point arrowPoint = new Point(userCharacter.Location.X + userCharacter.Size.Width/2 - arrow.Width/2, userCharacter.Location.Y - 20);
+                    Point arrowPoint = new Point(userCharacter.Location.X + userCharacter.Size.Width/2 - arrow!.Width/2, userCharacter.Location.Y - 20);
 
                     // 캐릭터 위에 화살표 표시
                     e.Graphics.DrawImage(arrow, arrowPoint);
