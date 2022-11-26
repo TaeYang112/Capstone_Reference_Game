@@ -5,7 +5,7 @@ using Capstone_Reference_Game.Other;
 namespace Capstone_Reference_Game
 {
 
-    public partial class QuizBaseForm : System.Windows.Forms.Form
+    public partial class QuizBaseForm : UserControl
     {
         #region Basic
 

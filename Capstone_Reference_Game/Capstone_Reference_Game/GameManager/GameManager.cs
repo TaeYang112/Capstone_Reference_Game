@@ -31,16 +31,6 @@ namespace Capstone_Reference_Game.Manager
         // 메시지가 없으면 대기하기 위한 락 오브젝트
         object lockObject = new object();
 
-        /*
-        public static YuhanTalkManager GetInstance()
-        {
-            if (talkManager == null)
-            {
-                talkManager = new YuhanTalkManager();
-            }
-            return talkManager;
-        }
-        */
         public GameManager(ReferecneGame_Form form)
         {
             this.MainForm = form;
@@ -59,11 +49,7 @@ namespace Capstone_Reference_Game.Manager
             messageProcess_thread = new Thread(MessageProcess);
             messageProcess_thread.IsBackground = true;
 
-            // 사용자 캐릭터
-            //clientUser = new ClientUser();
-
         }
-
 
         public void Start()
         {

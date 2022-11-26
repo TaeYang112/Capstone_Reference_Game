@@ -13,31 +13,20 @@ namespace Capstone_Referecne_GameServer.Client
         // TcpClient 객체
         public ClientData clientData { get; }
 
-        public string ID { get; private set; } = string.Empty;
+        public int Key { get ; private set; }
 
-        public string Name { get; private set; } = string.Empty;
+        public int Skin { get; set; } = 0;
 
-        public bool IsLogin { get; private set; } = false;
+        public string StudentID { get; set; } = string.Empty;
 
-        public ClientCharacter(string id, ClientData clientData)
+        public ClientCharacter(int key, ClientData clientData)
         {
             this.clientData = clientData;
-            this.ID = id;
+            this.Key = key;
+            Random random = new Random();
+            this.Skin = random.Next(0, 7);
         }
 
-        public void Login(string id, string name)
-        {
-            IsLogin = true;
-            this.ID = id;
-            this.Name = name;
-        }
-
-        public void Logout()
-        {
-            IsLogin = false;
-            ID = string.Empty;
-            Name = string.Empty;
-        }
         
     }
 }

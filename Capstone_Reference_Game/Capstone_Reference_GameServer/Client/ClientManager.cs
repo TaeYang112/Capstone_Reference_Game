@@ -21,8 +21,7 @@ namespace Capstone_Referecne_GameServer.Client
 
         public ClientCharacter AddClient(ClientData newClientData)
         {
-            newClientData.key = CurrentKey; ;
-            ClientCharacter newClient = new ClientCharacter("", newClientData);
+            ClientCharacter newClient = new ClientCharacter(CurrentKey, newClientData);
 
             // 새로운 클라이언트를 배열에 저장
             ClientDic.TryAdd(CurrentKey, newClient);
@@ -34,7 +33,7 @@ namespace Capstone_Referecne_GameServer.Client
 
         public bool RemoveClient(ClientCharacter oldClient)
         {
-            return ClientDic.TryRemove(oldClient.clientData.key, out _);
+            return ClientDic.TryRemove(oldClient.Key, out _);
         }
     }
 }

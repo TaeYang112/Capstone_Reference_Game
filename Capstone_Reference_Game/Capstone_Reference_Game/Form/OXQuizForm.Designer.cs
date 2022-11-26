@@ -36,9 +36,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Capstone_Reference_Game.Properties.Resources.OXBackground;
             this.ClientSize = new System.Drawing.Size(1024, 600);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "OXQuizForm";
             this.Text = "OXQuizForm";
             this.ResumeLayout(false);

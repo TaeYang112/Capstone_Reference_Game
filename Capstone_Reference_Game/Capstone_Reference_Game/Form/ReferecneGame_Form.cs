@@ -23,6 +23,10 @@ namespace Capstone_Reference_Game.Form
         private void ReferecneGame_Form_Load(object sender, EventArgs e)
         {
             gameManager.Start();
+            OXQuizForm oXQuizForm = new OXQuizForm();
+            Controls.Add(oXQuizForm);
+            oXQuizForm.SetTitle("sdfdf");
+            oXQuizForm.Start();
         }
     }
 }

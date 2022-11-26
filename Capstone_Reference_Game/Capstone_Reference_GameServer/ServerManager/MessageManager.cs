@@ -21,12 +21,6 @@ namespace Capstone_Referecne_GameServer
             byte protocol = converter.Protocol;
             switch (protocol)
             {
-                case Protocols.C_MSG:
-                    {
-                        string s = converter.NextString();
-                        Console.WriteLine(s);
-                    }
-                    break;
                 default:
                     Console.WriteLine("에러 프로토콜 : " + protocol);
                     break;

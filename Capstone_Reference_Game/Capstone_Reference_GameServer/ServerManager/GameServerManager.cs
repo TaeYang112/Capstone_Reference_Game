@@ -2,6 +2,7 @@
 using Capstone_Referecne_GameServer.TCP;
 using Capstone_Reference_Game_Module;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 
 // -----------------
 // ----- 서버 ------
@@ -23,11 +24,9 @@ namespace Capstone_Referecne_GameServer
         ConcurrentQueue<KeyValuePair<ClientCharacter, byte[]>> messageQueue;
 
 
-        // 로그인한 클라이언트들을 관리하는 객체
+        // 클라이언트들을 관리하는 객체
         public ClientManager clientManager { get; }
 
-        // 비로그인 클라이언트 관리 객체
-        public ClientManager guestClientManager { get;}
 
         // 메시지 처리하는 객체
         private MessageManager messageManager;
@@ -128,7 +127,6 @@ namespace Capstone_Referecne_GameServer
             server.onDataRecieve += new DataRecieveEventHandler(onDataRecieve);
 
             clientManager = new ClientManager();
-            guestClientManager = new ClientManager();
 
             sema_ClientLeave = new Semaphore(1, 1);
 
@@ -151,7 +149,7 @@ namespace Capstone_Referecne_GameServer
         public void Start()
         {
             server.Start();
-            HeartBeatTimer.Change(0, 30000);
+            HeartBeatTimer.Change(0, 50000);
             messageProcess_thread.Start();
         }
 
@@ -161,17 +159,7 @@ namespace Capstone_Referecne_GameServer
             MessageGenerator generator = new MessageGenerator(Protocols.S_PING);
             byte[] message = generator.Generate();
 
-            // 비로그인 유저
-            foreach(var client in guestClientManager.ClientDic)
-            {
-                SendMessage(message, client.Value);
-            }
-
-            // 로그인 유저
-            foreach (var client in clientManager.ClientDic)
-            {
-                SendMessage(message, client.Value);
-            }
+            SendMessageToAll(message);
         }
 
 
@@ -214,16 +202,26 @@ namespace Capstone_Referecne_GameServer
             }
 
         }
+
+        // 모두에게 메시지 전송
+        public void SendMessageToAll(byte[] message)
+        {
+            foreach(var item in clientManager.ClientDic)
+            {
+                SendMessage(message, item.Value );
+            }
+        }
         
         #region Event
 
         // 서버에 새로운 클라이언트가 접속하면 호출됨
         private void ClientJoin(ClientData newClientData)
         {
-            ClientCharacter newClient = guestClientManager.AddClient(newClientData);
+            ClientCharacter newClient = clientManager.AddClient(newClientData);
 
-            Console.WriteLine("[INFO] " + newClientData.key + "번 클라이언트가 접속하였습니다.");
-
+            // 접속한 클라이언트에게 학번 요청
+            MessageGenerator generator = new MessageGenerator(Protocols.S_REQ_ID);
+            SendMessage(generator.Generate(), newClient);
 
             // client의 메시지가 수신되면 메시지와 함께 ClientUser을 반환하도록 함
             MyServer.AsyncResultParam param = new MyServer.AsyncResultParam(newClientData, newClient);
@@ -234,26 +232,12 @@ namespace Capstone_Referecne_GameServer
         // 클라이언트와 연결이 끊기면 호출됨
         private void ClientLeave(ClientCharacter oldClient)
         {
-            bool result = false;
-            
-            // 로그인된 클라이언트일 경우
-            if(oldClient.IsLogin)
-            {
-                // clientManager에 있음
-                result = clientManager.RemoveClient(oldClient);
+            bool result = clientManager.RemoveClient(oldClient);
 
-                if(result == true)
-                {
-                    Console.WriteLine($"[INFO] {oldClient.ID}님이 접속을 종료하였습니다.");
-                }
-            }
-            else
+            if(result == true)
             {
-                result = guestClientManager.RemoveClient(oldClient);
-                if (result == true)
-                {
-                    Console.WriteLine($"[INFO] {oldClient.clientData.key}번 클라이언트님이 접속을 종료하였습니다.");
-                }
+                if(oldClient.StudentID != string.Empty)
+                    Console.WriteLine($"[INFO] {oldClient.StudentID}님이 접속을 종료하였습니다.");
             }
         }
 

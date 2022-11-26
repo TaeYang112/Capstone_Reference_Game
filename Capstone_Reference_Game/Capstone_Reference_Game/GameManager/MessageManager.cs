@@ -26,10 +26,10 @@ namespace Capstone_Reference_Game.Manager
                 byte protocol = converter.Protocol;
                 switch (protocol)
                 {
-                    // 서버로 부터 로그인 결과 수신
-                    case Protocols.RES_LOGIN:
+                    // 서버쪽의 사용자 학번 요청
+                    case Protocols.S_REQ_ID:
                         {
-                            ReceiveLoginResult(converter);
+
                         }
                         break;
                     // 클라이언트가 접속중인지 확인하기 위해 서버가 보내는 메시지
@@ -50,20 +50,11 @@ namespace Capstone_Reference_Game.Manager
                 
             }
 
-            private void ReceiveLoginResult(MessageConverter converter)
+            public void ResponseStudentID()
             {
-                int result = converter.NextByte();
-                
-                // 로그인에 성공
-                if(result == LoginResult.SUCCESS)
-                {
-                    Console.WriteLine("로긴 성공");
-                }
-                else
-                {
-                    Console.WriteLine("로긴 실패");
-                }
+
             }
+
 
             public void Error(MessageConverter converter)
             {
@@ -71,16 +62,6 @@ namespace Capstone_Reference_Game.Manager
 
                 switch (errorCode)
                 {
-                    case 0:
-                        {
-                            MessageBox.Show("해당 방은 꽉찼습니다.", $"에러코드 : {errorCode}", MessageBoxButtons.OK);
-                        }
-                        break;
-                    case 1:
-                        {
-                            MessageBox.Show("존재하지 않은 방입니다.", $"에러코드 : {errorCode}", MessageBoxButtons.OK);
-                        }
-                        break;
                     default:
                         Console.WriteLine("알수 없는 에러코드 {0}", errorCode);
                         break;

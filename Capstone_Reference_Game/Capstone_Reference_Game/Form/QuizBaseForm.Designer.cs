@@ -55,7 +55,6 @@
             this.Controls.Add(this.lbl_ProblemTitle);
             this.Name = "QuizBaseForm";
             this.Text = "Form1";
-            this.Deactivate += new System.EventHandler(this.Form_Deactivate);
             this.Load += new System.EventHandler(this.QuizForm_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form_KeyUp);
             this.ResumeLayout(false);
