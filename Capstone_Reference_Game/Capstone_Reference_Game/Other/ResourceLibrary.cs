@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Capstone_Reference_Game
+namespace Capstone_Reference_Game.Other
 {
     public class ResourceLibrary
     {
