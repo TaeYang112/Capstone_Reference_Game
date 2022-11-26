@@ -20,10 +20,6 @@ namespace Capstone_Reference_Game
         // 매 프레임마다 Update를 호출시키는 타이머
         private System.Threading.Timer UpdateTimer;
 
-        // 디버그
-        private System.Threading.Timer FPSTimer;
-        private int FPS = 0;
-
         // 게임 시작 여부
         public bool IsStart { get; private set; }
 
@@ -35,6 +31,12 @@ namespace Capstone_Reference_Game
 
         // 관전자 모드 여부
         public bool Spectator { get; }
+
+        // 문제 큰 제목
+        private string _title = string.Empty;
+
+        // 카운트 다운 변수
+        private int count;
 
         public QuizBaseForm() : this(false)
         {
@@ -64,10 +66,6 @@ namespace Capstone_Reference_Game
             TimerCallback tc = new TimerCallback(Update);
             UpdateTimer = new System.Threading.Timer(tc, null, Timeout.Infinite, Timeout.Infinite);
 
-            TimerCallback tc2 = new TimerCallback(DebugTimer);
-            FPSTimer = new System.Threading.Timer(tc2, null, 0, 1000);
-            FPS = 0;
-
             // Dispose 설정
             Disposed += CustomDispose;
 
@@ -78,7 +76,6 @@ namespace Capstone_Reference_Game
         // 비관리 메모리 해제
         protected virtual void CustomDispose(object? sender, EventArgs e)
         {
-            FPSTimer.Dispose();
             UpdateTimer.Dispose();
             progressBar.Dispose();
             if(Spectator == false)
@@ -93,7 +90,6 @@ namespace Capstone_Reference_Game
         private void QuizForm_Load(object sender, EventArgs e)
         {
             UpdateTimer.Change(0, 15);
-            lbl_ProblemTitle.Font = new Font(ResourceLibrary.Families[0], 25, FontStyle.Regular);
         }
 
         #endregion
@@ -101,20 +97,60 @@ namespace Capstone_Reference_Game
         // 게임 시작
         public virtual void Start()
         {
-            if (IsStart == false)
+            // 게임이 시작되었거나 카운트가 진행중이면 나감
+            if (IsStart || timer_CountDown.Enabled)
             {
-                IsStart = true;
-                if (Spectator == false)
-                {
-                    userCharacter!.Location = new Point(ClientRectangle.Width / 2 - userCharacter.Size.Width / 2, (ClientRectangle.Height - 120) / 2 - userCharacter.Size.Height / 2 + 120);
-                }
-
-                // 사용자가 타이머의 시간을 정했을 때만 타이머를 시작함
-                if (progressBar.TargetTime > 0)
-                {
-                    progressBar.Start();
-                }
+                return;
             }
+
+            // 큰제목 라벨에 제목넣어줌
+            lbl_ProblemTitle.Text = _title;
+            lbl_ProblemTitle.Font = new Font(ResourceLibrary.Families[0], 25, FontStyle.Regular);
+
+            IsStart = true;
+            
+            // 관전자가 아닐경우
+            if (Spectator == false)
+            {
+                // 캐릭터 시작 위치 설정
+                userCharacter!.Location = new Point(ClientRectangle.Width / 2 - userCharacter.Size.Width / 2, (ClientRectangle.Height - 120) / 2 - userCharacter.Size.Height / 2 + 120);
+            }
+
+            // 사용자가 타이머의 시간을 정했을 때만 타이머를 시작함
+            if (progressBar.TargetTime > 0)
+            {
+                progressBar.Start();
+            }
+        }
+
+        // 카운트 다운과 함께 게임을 시작함
+        public void StartWithCount(int sec)
+        {
+            // 게임이 시작되었거나 카운트가 진행중이면 나감
+            if(IsStart || timer_CountDown.Enabled)
+            {
+                return;
+            }
+
+            lbl_ProblemTitle.Font = new Font(ResourceLibrary.Families[0], 50, FontStyle.Regular);
+            lbl_ProblemTitle.Text = sec.ToString();
+
+            count = sec - 1;
+            timer_CountDown.Enabled = true;
+        }
+
+        
+        // 카운트 다운이 시작되면 1초마다 호출됨
+        private void timer_CountDown_Tick(object sender, EventArgs e)
+        {
+            if(count == 0)
+            {
+                timer_CountDown.Enabled = false;
+                Start();
+                return;
+            }
+            lbl_ProblemTitle.Text = count.ToString();
+            count--;
         }
 
         // 몇번 답을 골랐는지 반환
@@ -132,13 +168,17 @@ namespace Capstone_Reference_Game
         // 문제 제목 설정
         public void SetTitle(string title)
         {
-            lbl_ProblemTitle.Text = title;
+            _title = title;
+            if(IsStart)
+            {
+                lbl_ProblemTitle.Text = title;
+            }
         }
 
         // 타이머 종료
         protected virtual void OnTimerStop(object? sender, EventArgs e)
         {
-            Console.WriteLine(GetAnswer());
+            // Console.WriteLine(GetAnswer());
         }
 
         #region Graphic
@@ -146,8 +186,6 @@ namespace Capstone_Reference_Game
         // 화면 다시그리기
         protected virtual void Update(object? temp)
         {
-            FPS++;
-
             if (Spectator == false)
             {
                 // 자신의 캐릭터 이동
@@ -195,13 +233,6 @@ namespace Capstone_Reference_Game
         protected virtual string GetAnswerString()
         {
             return "";
-        }
-
-        // 프레임 표시
-        private void DebugTimer(object? c)
-        {
-            Console.WriteLine(FPS + "FPS.");
-            FPS = 0;
         }
 
         #endregion
@@ -316,6 +347,7 @@ namespace Capstone_Reference_Game
                 // 모든 키 해제 전송
             }
         }
+
 
         #endregion Input Process
 

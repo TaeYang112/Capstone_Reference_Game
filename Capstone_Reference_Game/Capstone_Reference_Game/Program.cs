@@ -19,7 +19,8 @@ namespace Capstone_Reference_Game
             form.SetTitle("2 + 2 X 2의 답은?");
             form.SetQuestions(new List<string> {"6","8","4","1"});
             form.SetTargetTime(30);
-            form.Start();
+            form.StartWithCount(3); // 카운트 다운으로 시작
+            //form.Start();         // 카운트 다운 없이 시작
             
 
             /*

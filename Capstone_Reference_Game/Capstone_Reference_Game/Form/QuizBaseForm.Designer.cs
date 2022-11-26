@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lbl_ProblemTitle = new System.Windows.Forms.Label();
+            this.timer_CountDown = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // lbl_ProblemTitle
@@ -39,6 +41,11 @@
             this.lbl_ProblemTitle.Size = new System.Drawing.Size(1024, 97);
             this.lbl_ProblemTitle.TabIndex = 1;
             this.lbl_ProblemTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // timer_CountDown
+            // 
+            this.timer_CountDown.Interval = 1000;
+            this.timer_CountDown.Tick += new System.EventHandler(this.timer_CountDown_Tick);
             // 
             // QuizBaseForm
             // 
@@ -58,5 +65,6 @@
         #endregion
 
         private Label lbl_ProblemTitle;
+        private System.Windows.Forms.Timer timer_CountDown;
     }
 }
