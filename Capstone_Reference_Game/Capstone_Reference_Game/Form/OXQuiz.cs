@@ -1,23 +1,23 @@
-﻿namespace Capstone_Reference_Game
+﻿using Capstone_Reference_Game.Client;
+using Capstone_Reference_Game.Form;
+using System.Collections.Concurrent;
+
+namespace Capstone_Reference_Game
 {
     // 가로 1024  /  세로 600
-    public partial class OXQuizForm : QuizBaseForm
+    public partial class OXQuiz : QuizBase
     {
-        public OXQuizForm(bool isSpectator) : base(isSpectator)
+        public OXQuiz(ClientCharacter? user, ConcurrentDictionary<int, ClientCharacter> clients) : base(user,clients)
         {
             InitializeComponent();
         }
 
-        public OXQuizForm() : base(false)
-        {
-            InitializeComponent();
-        }
 
         // 몇번 답을 골랐는지 반환
         public override int GetAnswer()
         {
             // 관전자 일경우 -2 반환
-            if(Spectator)
+            if(userCharacter == null)
             {
                 return -2;
             }

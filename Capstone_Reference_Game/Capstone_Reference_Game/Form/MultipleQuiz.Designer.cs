@@ -1,6 +1,6 @@
 ﻿namespace Capstone_Reference_Game.Form
 {
-    partial class ReferecneGame_Form
+    partial class MultipleQuiz
     {
         /// <summary>
         /// Required designer variable.
@@ -30,15 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // ReferecneGame_Form
+            // MultipleQuizForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::Capstone_Reference_Game.Properties.Resources.MultipleQuizeBackground;
             this.ClientSize = new System.Drawing.Size(1024, 600);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "ReferecneGame_Form";
-            this.Text = "ReferecneGame_Form";
-            this.Load += new System.EventHandler(this.ReferecneGame_Form_Load);
+            this.Name = "MultipleQuizForm";
+            this.Text = "MultipleQuizForm";
             this.ResumeLayout(false);
 
         }

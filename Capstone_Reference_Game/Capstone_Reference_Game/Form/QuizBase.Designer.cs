@@ -1,6 +1,6 @@
 ﻿namespace Capstone_Reference_Game
 {
-    partial class QuizBaseForm
+    partial class QuizBase
     {
         /// <summary>
         ///  Required designer variable.
@@ -56,7 +56,6 @@
             this.Name = "QuizBaseForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.QuizForm_Load);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form_KeyUp);
             this.ResumeLayout(false);
 
         }

@@ -11,9 +11,7 @@ using System.Diagnostics;
 namespace Capstone_Referecne_GameServer
 {
     public class GameServerManager
-    {
-        //public static Program program = Program.GetInstance();
-
+    { 
         // TCP 서버를 관리하고 클라이언트와 통신하는 객체
         private MyServer server;
 
@@ -109,17 +107,6 @@ namespace Capstone_Referecne_GameServer
             }
         }
 
-        /*
-        public static Program GetInstance()
-        {
-            if (program == null)
-            {
-                program = new Program();
-            }
-            return program;
-        }
-        */
-
         private GameServerManager()
         {
             server = new MyServer();
@@ -204,11 +191,41 @@ namespace Capstone_Referecne_GameServer
         }
 
         // 모두에게 메시지 전송
-        public void SendMessageToAll(byte[] message)
+        public void SendMessageToAll(byte[] message, ClientCharacter? ignoreClient = null)
         {
             foreach(var item in clientManager.ClientDic)
             {
+                if (ignoreClient != null && item.Value.Key == ignoreClient.Key) 
+                    continue;
+
                 SendMessage(message, item.Value );
+            }
+        }
+
+        // 클라이언트에게 각 정보를 넘겨줌 ( 다른 클라이언트, 퀴즈 )
+        public void SendGameInfo(ClientCharacter client)
+        {
+            // 유저 본인의 정보
+            MessageGenerator generator = new MessageGenerator(Protocols.S_USER_INFO);
+            generator.AddInt(client.Skin);
+
+            SendMessage(generator.Generate(), client);
+
+            generator.Clear();
+            generator.Protocol = Protocols.S_USER_INFO_OTHER;
+            
+            // 다른 클라이언트 정보
+            foreach(var item in clientManager.ClientDic)
+            {
+                ClientCharacter otherClient = item.Value;
+
+                if (client.Key == otherClient.Key) continue;
+
+                generator.AddInt(otherClient.Key);
+                generator.AddInt(otherClient.Skin);
+                generator.AddInt(otherClient.Location.X).AddInt(otherClient.Location.Y);
+                SendMessage(generator.Generate(), client);
+                generator.Clear();
             }
         }
         

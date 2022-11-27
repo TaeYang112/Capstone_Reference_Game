@@ -1,22 +1,19 @@
 using Capstone_Reference_Game.Client;
+using Capstone_Reference_Game.Form;
+using Capstone_Reference_Game.Manager;
 using Capstone_Reference_Game.Object;
 using Capstone_Reference_Game.Other;
+using System.Collections.Concurrent;
 
 namespace Capstone_Reference_Game
 {
 
-    public partial class QuizBaseForm : UserControl
+    abstract public partial class QuizBase : UserControl
     {
         #region Basic
 
-        // 유저 캐릭터
-        protected ClientCharacter? userCharacter;
-
         // 유저 캐릭터 위에 있는 화살표
         private Bitmap? arrow;
-
-        // 클라이언트 매니저 ( 유저 캐릭터를 제외한 나머지 클라이언트 제어 )
-        public ClientManager clientManager { get; } =  new ClientManager();
 
         // 매 프레임마다 Update를 호출시키는 타이머
         private System.Threading.Timer UpdateTimer;
@@ -30,8 +27,8 @@ namespace Capstone_Reference_Game
         // 자신이 고른 정답을 보여주는 라벨
         private CustomLabel? lbl_MyAnswer;
 
-        // 관전자 모드 여부
-        public bool Spectator { get; }
+        protected ClientCharacter? userCharacter;
+        protected ConcurrentDictionary<int, ClientCharacter> clients;
 
         // 문제 큰 제목
         private string _title = string.Empty;
@@ -39,18 +36,15 @@ namespace Capstone_Reference_Game
         // 카운트 다운 변수
         private int count;
 
-        public QuizBaseForm() : this(false)
-        {
-
-        }
-        public QuizBaseForm(bool isSpectator)
+        public QuizBase(ClientCharacter? user, ConcurrentDictionary<int, ClientCharacter> clients)
         {
             InitializeComponent();
 
-            this.Spectator = isSpectator;
-            if(isSpectator == false)
+            userCharacter = user;
+            this.clients = clients;
+
+            if (user != null)
             {
-                userCharacter = new ClientCharacter(0, 1);
                 arrow = Properties.Resources.arrow;
                 lbl_MyAnswer = new CustomLabel(new Point(0, 100), new Size(1024, 20));
                 lbl_MyAnswer.Font = new Font(ResourceLibrary.Families[0], 15, FontStyle.Regular);
@@ -79,9 +73,8 @@ namespace Capstone_Reference_Game
         {
             UpdateTimer.Dispose();
             progressBar.Dispose();
-            if(Spectator == false)
+            if(userCharacter != null)
             {
-                userCharacter!.Dispose();
                 arrow!.Dispose();
                 lbl_MyAnswer!.Dispose();
             }
@@ -109,13 +102,15 @@ namespace Capstone_Reference_Game
             lbl_ProblemTitle.Font = new Font(ResourceLibrary.Families[0], 25, FontStyle.Regular);
 
             IsStart = true;
-            
+
             // 관전자가 아닐경우
-            if (Spectator == false)
+            if (userCharacter != null)
             {
                 // 캐릭터 시작 위치 설정
-                userCharacter!.Location = new Point(ClientRectangle.Width / 2 - userCharacter.Size.Width / 2, (ClientRectangle.Height - 120) / 2 - userCharacter.Size.Height / 2 + 120);
+                Point clientCenterLoc = new Point(ClientRectangle.Width / 2 - userCharacter.Size.Width / 2, (ClientRectangle.Height - 120) / 2 - userCharacter.Size.Height / 2 + 120);
+                userCharacter.Location = clientCenterLoc;
             }
+            
 
             // 사용자가 타이머의 시간을 정했을 때만 타이머를 시작함
             if (progressBar.TargetTime > 0)
@@ -187,14 +182,12 @@ namespace Capstone_Reference_Game
         // 화면 다시그리기
         protected virtual void Update(object? temp)
         {
-            if (Spectator == false)
-            {
-                // 자신의 캐릭터 이동
-                userCharacter!.MoveWithKeyDown();
-            }
+            // 자신의 캐릭터 이동
+            userCharacter?.MoveWithKeyDown();
+            
 
             // 다른 클라이언트 이동
-            foreach (var client in clientManager.Clients)
+            foreach (var client in clients)
             {
                 client.Value.MoveWithKeyDown();
             }
@@ -207,20 +200,20 @@ namespace Capstone_Reference_Game
             progressBar.Draw(e.Graphics);
             if (IsStart)
             {
-                foreach (var client in clientManager.Clients)
+                foreach (var client in clients)
                 {
                     client.Value.Draw(e.Graphics);
                 }
 
                 // 관전 모드가 아니라면
-                if (Spectator == false)
+                if (userCharacter != null)
                 {
                     // 자신이 고른 답 표시
                     lbl_MyAnswer!.Text = GetAnswerString();
                     lbl_MyAnswer.Draw(e.Graphics);
 
                     // 자신 클라이언트 출력
-                    userCharacter!.Draw(e.Graphics);
+                    userCharacter.Draw(e.Graphics);
 
                     Point arrowPoint = new Point(userCharacter.Location.X + userCharacter.Size.Width/2 - arrow!.Width/2, userCharacter.Location.Y - 20);
 
@@ -238,119 +231,7 @@ namespace Capstone_Reference_Game
 
         #endregion
 
-        #region Input Process
-
-        // 키가 눌렸을 때
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            // 관전자 모드일경우 키처리 X
-            if (IsStart && Spectator == false)
-            {
-                switch (keyData)
-                {
-                    case Keys.Left:
-                        if (userCharacter!.LeftKeyDown == false)
-                        {
-                            userCharacter.LeftKeyDown = true;
-
-                            // 왼쪽키 true 전송
-                        }
-                        break;
-                    case Keys.Right:
-                        if (userCharacter!.RightKeyDown == false)
-                        {
-                            userCharacter.RightKeyDown = true;
-
-                            // 오른쪽키 true 전송
-                        }
-                        break;
-                    case Keys.Up:
-                        if (userCharacter!.UpKeyDown == false)
-                        {
-                            userCharacter.UpKeyDown = true;
-
-                            // 윗키 true 전송
-                        }
-                        break;
-                    case Keys.Down:
-                        if (userCharacter!.DownKeyDown == false)
-                        {
-                            userCharacter.DownKeyDown = true;
-
-                            // 아랫키 true 전송
-                        }
-                        break;
-                    default:
-                        return base.ProcessCmdKey(ref msg, keyData);
-                }
-            }
-            return true;
-        }
-
-        // 키가 떼어졌을 때
-        private void Form_KeyUp(object sender, KeyEventArgs e)
-        {
-            // 관전자 일경우 키처리 X
-            if (IsStart && Spectator == false)
-            {
-                switch (e.KeyData)
-                {
-                    case Keys.Left:
-                        if (userCharacter!.LeftKeyDown == true)
-                        {
-                            userCharacter.LeftKeyDown = false;
-
-                            // 왼쪽키 false 전송
-                        }
-                        break;
-                    case Keys.Right:
-                        if (userCharacter!.RightKeyDown == true)
-                        {
-                            userCharacter.RightKeyDown = false;
-
-                            // 오른쪽키 false 전송
-                        }
-                        break;
-                    case Keys.Up:
-                        if (userCharacter!.UpKeyDown == true)
-                        {
-                            userCharacter.UpKeyDown = false;
-
-                            // 윗키 false 전송
-                        }
-                        break;
-                    case Keys.Down:
-                        if (userCharacter!.DownKeyDown == true)
-                        {
-                            userCharacter.DownKeyDown = false;
-
-                            // 아랫키 false 전송
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        // 폼의 포커스가 풀리면 ( 알트 탭, 다른 윈도우 선택시 ) 이벤트 발생
-        private void Form_Deactivate(object sender, EventArgs e)
-        {
-            if (Spectator == false)
-            {
-                // 입력중인 키 모두 해제
-
-                userCharacter!.DownKeyDown = false;
-                userCharacter.UpKeyDown = false;
-                userCharacter.LeftKeyDown = false;
-                userCharacter.RightKeyDown = false;
-
-                // 모든 키 해제 전송
-            }
-        }
-
-
-        #endregion Input Process
+        
 
         
     }

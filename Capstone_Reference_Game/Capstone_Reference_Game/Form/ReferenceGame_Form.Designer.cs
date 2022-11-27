@@ -1,6 +1,6 @@
-﻿namespace Capstone_Reference_Game
+﻿namespace Capstone_Reference_Game.Form
 {
-    partial class OXQuizForm
+    partial class ReferenceGame_Form
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,17 @@
         {
             this.SuspendLayout();
             // 
-            // OXQuizForm
+            // ReferenceGame_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Capstone_Reference_Game.Properties.Resources.OXBackground;
             this.ClientSize = new System.Drawing.Size(1024, 600);
-            this.Name = "OXQuizForm";
-            this.Text = "OXQuizForm";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Name = "ReferenceGame_Form";
+            this.Text = "ReferecneGame_Form";
+            this.Deactivate += new System.EventHandler(this.Form_Deactivate);
+            this.Load += new System.EventHandler(this.ReferecneGame_Form_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form_KeyUp);
             this.ResumeLayout(false);
 
         }

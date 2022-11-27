@@ -1,5 +1,7 @@
-﻿using Capstone_Reference_Game.Object;
+﻿using Capstone_Reference_Game.Client;
+using Capstone_Reference_Game.Object;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,24 +13,20 @@ using System.Windows.Forms;
 
 namespace Capstone_Reference_Game.Form
 {
-    public partial class MultipleQuizForm : QuizBaseForm
+    public partial class MultipleQuiz : QuizBase
     {
         private Question[] questions = new Question[1];
 
-        public MultipleQuizForm(bool isSpectator) : base(isSpectator)
+        public MultipleQuiz(ClientCharacter? user, ConcurrentDictionary<int, ClientCharacter> clients) : base(user, clients)
         {
             InitializeComponent();
-        }
-
-        public MultipleQuizForm() : base(false)
-        {
         }
 
         // 몇번 답을 골랐는지 반환
         public override int GetAnswer()
         {
             // 관전자 모드일경우 -2 반환
-            if (Spectator)
+            if (userCharacter == null)
                 return -2;
 
             // 캐릭터 중앙 좌표

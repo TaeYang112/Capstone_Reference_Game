@@ -15,5 +15,7 @@ namespace Capstone_Reference_Game.Client
         {
             Clients = new ConcurrentDictionary<int,ClientCharacter>();
         }
+
+        // 미사용
     }
 }

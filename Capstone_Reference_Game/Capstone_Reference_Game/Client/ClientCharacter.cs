@@ -1,5 +1,6 @@
 ﻿
 using Capstone_Reference_Game.Other;
+using Capstone_Reference_Game_Module;
 using System.Numerics;
 
 namespace Capstone_Reference_Game.Client
@@ -23,10 +24,7 @@ namespace Capstone_Reference_Game.Client
 
 
         // 이동키 누름 여부
-        public bool LeftKeyDown { get; set; } = false;
-        public bool RightKeyDown { get; set; } = false;
-        public bool UpKeyDown { get; set; } = false;
-        public bool DownKeyDown { get; set; } = false;
+        public bool[] Keys { get; } = new bool[4];
         
 
         // Dispose 재호출 방지를 위한 플래그 변수
@@ -65,15 +63,16 @@ namespace Capstone_Reference_Game.Client
             }
 
             // 비관리 메모리 해제
-            image!.Dispose();
+            image?.Dispose();
 
             _disposed = true;
         }
 
         #endregion Basic
 
-        private void SetSkin(int skinNum)
+        public void SetSkin(int skinNum)
         {
+            Image? temp = image;
             switch (skinNum % 8)
             {
                 case 0:
@@ -104,6 +103,7 @@ namespace Capstone_Reference_Game.Client
                     image = Properties.Resources.Red;
                     break;
             }
+            temp?.Dispose();
         }
 
         public void Draw(Graphics g)
@@ -121,25 +121,25 @@ namespace Capstone_Reference_Game.Client
             PointF velocity = new PointF(0.0f, 0.0f);
 
             // 왼쪽 방향키가 눌려있는 상태라면 왼쪽으로 움직임
-            if (LeftKeyDown == true)
+            if (Keys[Keyboard.LEFT] == true)
             {
                 velocity.X -= 1.0f;
             }
 
             // 오른쪽 방향키가 눌려있는 상태라면 오른쪽으로 움직임
-            if (RightKeyDown == true)
+            if (Keys[Keyboard.RIGHT] == true)
             {
                 velocity.X += 1.0f;
             }
 
             // 윗쪽 방향키가 눌려있는 상태라면 왼쪽으로 움직임
-            if (UpKeyDown == true)
+            if (Keys[Keyboard.UP] == true)
             {
                 velocity.Y -= 1.0f;
             }
 
-            // 윗쪽 방향키가 눌려있는 상태라면 왼쪽으로 움직임
-            if (DownKeyDown == true)
+            // 아래쪽 방향키가 눌려있는 상태라면 왼쪽으로 움직임
+            if (Keys[Keyboard.DOWN] == true)
             {
                 velocity.Y += 1.0f;
             }

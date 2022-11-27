@@ -5,6 +5,7 @@
 // -----------------
 
 using Capstone_Referecne_GameServer.TCP;
+using System.Drawing;
 
 namespace Capstone_Referecne_GameServer.Client
 {
@@ -19,12 +20,15 @@ namespace Capstone_Referecne_GameServer.Client
 
         public string StudentID { get; set; } = string.Empty;
 
+        public Point Location { get; set; }
+
         public ClientCharacter(int key, ClientData clientData)
         {
             this.clientData = clientData;
             this.Key = key;
             Random random = new Random();
-            this.Skin = random.Next(0, 7);
+            this.Skin = random.Next(0, 8);
+            Location = new Point(490, 343);
         }
 
         

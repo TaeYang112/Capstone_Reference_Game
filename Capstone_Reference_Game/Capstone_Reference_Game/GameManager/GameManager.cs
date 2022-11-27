@@ -1,4 +1,5 @@
-﻿using Capstone_Reference_Game.Form;
+﻿using Capstone_Reference_Game.Client;
+using Capstone_Reference_Game.Form;
 using Reference_Game.TCP;
 using System;
 using System.Collections.Concurrent;
@@ -17,7 +18,7 @@ namespace Capstone_Reference_Game.Manager
         // 서버와 TCP통신을 담당하는 객체
         public MyClient myClient { get; }
 
-        public ReferecneGame_Form MainForm { get; }
+        public ReferenceGame_Form MainForm { get; }
 
         // 메시지 처리 스레드
         private Thread messageProcess_thread;
@@ -31,7 +32,7 @@ namespace Capstone_Reference_Game.Manager
         // 메시지가 없으면 대기하기 위한 락 오브젝트
         object lockObject = new object();
 
-        public GameManager(ReferecneGame_Form form)
+        public GameManager(ReferenceGame_Form form)
         {
             this.MainForm = form;
 
