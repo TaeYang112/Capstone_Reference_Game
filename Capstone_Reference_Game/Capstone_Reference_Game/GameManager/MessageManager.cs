@@ -69,6 +69,12 @@ namespace Capstone_Reference_Game.Manager
                             GameEnd();
                         }
                         break;
+                    // 다른 클라이언트 종료
+                    case Protocols.S_LEAVE_OTHER:
+                        {
+                            RemoveClient(converter);
+                        }
+                        break;
                     // 클라이언트가 접속중인지 확인하기 위해 서버가 보내는 메시지
                     case Protocols.S_PING:
                         {
@@ -187,6 +193,13 @@ namespace Capstone_Reference_Game.Manager
                     gameManager.SendMessage(generator.Generate());
                 }
                 Application.Exit();
+            }
+
+            // 나간 클라이언트 제거
+            private void RemoveClient(MessageConverter converter)
+            {
+                int key = converter.NextInt();
+                gameManager.MainForm.Clients.TryRemove(key, out _);
             }
 
             private void Error(MessageConverter converter)

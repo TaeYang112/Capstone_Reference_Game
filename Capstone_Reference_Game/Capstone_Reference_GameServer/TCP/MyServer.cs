@@ -7,6 +7,7 @@
 namespace Capstone_Referecne_GameServer.TCP
 {
     public delegate void ClientJoinEventHandler(ClientData newClient);
+    public delegate void ClientLeaveEventHandler(ClientData oldClient);
     public delegate void DataRecieveEventHandler(MyServer.AsyncResultParam param, byte[] Message);
     public class MyServer
     {
@@ -19,8 +20,12 @@ namespace Capstone_Referecne_GameServer.TCP
         // 클라이언트가 접속할경우 ClientJoin에 연결된 함수를 호출함
         public event ClientJoinEventHandler? onClientJoin;
 
+        // 클라이언트가 나가면 연결된 함수 호출
+        public event ClientLeaveEventHandler? onClientLeave;
+
         // 클라이언트로 부터 메시지가 수신되면 연결된 함수 호출
         public event DataRecieveEventHandler? onDataRecieve;
+
 
         public MyServer()
         {
@@ -102,6 +107,10 @@ namespace Capstone_Referecne_GameServer.TCP
 
                 if (byteSize == 0)
                 {
+                    if(onClientLeave != null)
+                    {
+                        onClientLeave(clientData);
+                    }
                     return;
                 }
 

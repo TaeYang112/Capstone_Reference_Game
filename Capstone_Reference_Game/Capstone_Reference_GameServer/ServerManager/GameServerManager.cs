@@ -113,6 +113,7 @@ namespace Capstone_Referecne_GameServer
             server = new MyServer();
             server.onClientJoin += new ClientJoinEventHandler(ClientJoin);
             server.onDataRecieve += new DataRecieveEventHandler(onDataRecieve);
+            server.onClientLeave += new ClientLeaveEventHandler(onClientLeave);
 
             clientManager = new ClientManager();
 
@@ -324,7 +325,7 @@ namespace Capstone_Referecne_GameServer
         }
 
 
-        // 클라이언트와 연결이 끊기면 호출됨
+        // 클라이언트와 연결을 끊을 때 호출
         private void ClientLeave(ClientCharacter oldClient)
         {
             bool result = clientManager.RemoveClient(oldClient);
@@ -333,6 +334,22 @@ namespace Capstone_Referecne_GameServer
             {
                 if(oldClient.StudentID != string.Empty)
                     Console.WriteLine($"[INFO] [{oldClient.StudentID}]님이 접속을 종료하였습니다.");
+
+                MessageGenerator generator = new MessageGenerator(Protocols.S_LEAVE_OTHER);
+                generator.AddInt(oldClient.Key);
+                SendMessageToAll(generator.Generate());
+            }
+        }
+
+        // 클라이언트와 연결이 끊기면 호출
+        private void onClientLeave(ClientData oldData)
+        {
+            ClientCharacter? clientCharacter;
+            bool result = clientManager.ClientDic.TryGetValue(oldData.Key, out clientCharacter);
+
+            if (result == true)
+            {
+                ClientLeave(clientCharacter!);
             }
         }
 

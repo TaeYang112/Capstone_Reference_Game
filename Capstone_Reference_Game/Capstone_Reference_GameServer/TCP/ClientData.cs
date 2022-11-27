@@ -15,6 +15,8 @@ namespace Capstone_Referecne_GameServer.TCP
         // 메시지를 받을 때 사용하는 버퍼
         public byte[] byteData { get; set; }                                                
 
+        public int Key { get; set; }
+
         public ClientData(TcpClient client)
         {
             this.client = client;

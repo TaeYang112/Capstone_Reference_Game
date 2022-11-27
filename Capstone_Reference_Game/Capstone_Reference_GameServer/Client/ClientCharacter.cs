@@ -26,6 +26,7 @@ namespace Capstone_Referecne_GameServer.Client
         {
             this.clientData = clientData;
             this.Key = key;
+            clientData.Key = Key;
             Random random = new Random();
             this.Skin = random.Next(0, 8);
             Location = new Point(490, 343);

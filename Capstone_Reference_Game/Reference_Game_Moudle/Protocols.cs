@@ -20,6 +20,7 @@
         public const byte S_LCATION_SYNC_OTHER = 108;
         public const byte S_GAME_INFO = 109;
         public const byte S_GAME_END = 110;
+        public const byte S_LEAVE_OTHER = 111;
     }
 
     public static class Keyboard
