@@ -1,9 +1,8 @@
 using Capstone_Reference_Game.Client;
-using Capstone_Reference_Game.Form;
-using Capstone_Reference_Game.Manager;
 using Capstone_Reference_Game.Object;
 using Capstone_Reference_Game.Other;
 using System.Collections.Concurrent;
+using System.Runtime.InteropServices;
 
 namespace Capstone_Reference_Game
 {
@@ -26,6 +25,9 @@ namespace Capstone_Reference_Game
 
         // 자신이 고른 정답을 보여주는 라벨
         private CustomLabel? lbl_MyAnswer;
+
+        // 큰 제목 라벨
+        private CustomLabel lbl_ProblemTitle = new CustomLabel(new Point(0,18), new Size(1024,97));
 
         protected ClientCharacter? userCharacter;
         protected ConcurrentDictionary<int, ClientCharacter> clients;
@@ -72,6 +74,7 @@ namespace Capstone_Reference_Game
         protected virtual void CustomDispose(object? sender, EventArgs e)
         {
             UpdateTimer.Dispose();
+            lbl_ProblemTitle.Dispose();
             progressBar.Dispose();
             if(userCharacter != null)
             {
@@ -183,21 +186,23 @@ namespace Capstone_Reference_Game
         protected virtual void Update(object? temp)
         {
             // 자신의 캐릭터 이동
-            userCharacter?.MoveWithKeyDown();
-            
-
+            if (userCharacter != null)
+            {
+                userCharacter.MoveWithKeyDown();
+            }
             // 다른 클라이언트 이동
             foreach (var client in clients)
             {
                 client.Value.MoveWithKeyDown();
             }
-
-            Invalidate(ClientRectangle);
+            Invalidate();
         }
+
 
         protected virtual void OnPaint(object? sender, PaintEventArgs e)
         {
             progressBar.Draw(e.Graphics);
+            lbl_ProblemTitle.Draw(e.Graphics);
             if (IsStart)
             {
                 foreach (var client in clients)
