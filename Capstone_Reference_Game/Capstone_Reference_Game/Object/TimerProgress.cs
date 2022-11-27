@@ -32,6 +32,8 @@ namespace Capstone_Reference_Game.Object
         // 시작 여부
         public bool IsStart { get; private set; } = false;
 
+        public int TimeOffset { get; set; } = 0;
+
         public TimerProgress(Point location, Size size)
         {
             Location = location;
@@ -58,7 +60,7 @@ namespace Capstone_Reference_Game.Object
         {
             if (IsStart)
             {
-                float remainTime = TargetTime - (float)st.ElapsedMilliseconds / 1000;
+                float remainTime = TargetTime - (float)(st.ElapsedMilliseconds + TimeOffset )/ 1000;
                 if (remainTime < 0) remainTime = 0;
                 float ratio = remainTime / TargetTime;
                 Size tempSize = new Size((int)(Size.Width * ratio), Size.Height);

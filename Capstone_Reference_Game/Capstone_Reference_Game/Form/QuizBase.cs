@@ -159,9 +159,10 @@ namespace Capstone_Reference_Game
         }
 
         // 타임어택 설정
-        public void SetTargetTime(int sec)
+        public void SetTargetTime(int sec, int cu)
         {
             progressBar.TargetTime = sec;
+            progressBar.TimeOffset = cu;
         }
 
         // 문제 제목 설정

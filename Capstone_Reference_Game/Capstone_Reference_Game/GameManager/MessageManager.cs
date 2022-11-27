@@ -119,6 +119,7 @@ namespace Capstone_Reference_Game.Manager
                 byte quizType = converter.NextByte();
                 string title = converter.NextString();
                 int time = converter.NextInt();
+                int currentTime = converter.NextInt();
 
                 List<string>? questions = null;
                 if(quizType == QuizTypes.MULTIPLE_QUIZ)
@@ -132,7 +133,7 @@ namespace Capstone_Reference_Game.Manager
                     }
                 }
 
-                gameManager.MainForm.SettingGame(quizType, title, time, questions);
+                gameManager.MainForm.GameStart(quizType, title, time, currentTime ,questions);
             }
 
             // 다른 클라이언트의 키 입력 처리

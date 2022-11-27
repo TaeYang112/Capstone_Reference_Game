@@ -19,9 +19,6 @@ namespace Capstone_Reference_Game.Form
         // 메인 매니저
         public GameManager GameManager { get; private set; }
 
-        // 현재 보여지고 있는 퀴즈
-        public QuizBase? ShowingQuiz { get; private set; }
-
         // 유저 캐릭터
         public ClientCharacter? UserCharacter { get; private set; }
 
@@ -52,30 +49,6 @@ namespace Capstone_Reference_Game.Form
         private void ReferecneGame_Form_Load(object sender, EventArgs e)
         {
             GameManager.Start();
-
-            GameStart();
-            
-        }
-
-        // 게임 시작
-        public void GameStart()
-        {
-            IsStart = true;
-            syncTimer?.Change(0, 500);
-
-            ShowingQuiz?.Start();
-        }
-
-        // 보여질 화면 변경
-        public void ChangeScreen(QuizBase newScreen)
-        {
-            Invoke(new Action(delegate () { 
-                this.Controls.Clear();
-                this.Controls.Add(newScreen);
-                ShowingQuiz = newScreen;
-                GameStart();
-            }));
-            
         }
         
         private void LocationSync(object? o)
@@ -90,7 +63,7 @@ namespace Capstone_Reference_Game.Form
             }
         }
 
-        public void SettingGame(byte type, string title, int time, List<string>? questions)
+        public void GameStart(byte type, string title, int targetTime, int currentTime,List<string>? questions)
         {
             QuizBase? quiz;
             if(type == QuizTypes.OX_QUIZ)
@@ -105,9 +78,16 @@ namespace Capstone_Reference_Game.Form
             }
 
             quiz.SetTitle(title);
-            quiz.SetTargetTime(time);
+            quiz.SetTargetTime(targetTime, currentTime);
 
-            ChangeScreen(quiz);
+            quiz.Start();
+            IsStart = true;
+            syncTimer?.Change(0, 500);
+
+            Invoke(new Action(delegate () {
+                this.Controls.Clear();
+                this.Controls.Add(quiz);
+            }));
 
         }
 

@@ -36,6 +36,9 @@ namespace Capstone_Referecne_GameServer
         // 게임 설정
         GameConfiguration Configuration { get; set; }
 
+        // 게임 진행된 시간
+        Stopwatch stopwatch = new Stopwatch();
+
         static void Main(string[] args)
         {
             GameServerManager program = new GameServerManager();
@@ -44,7 +47,6 @@ namespace Capstone_Referecne_GameServer
             while (true)
             {
                 string[] command = Console.ReadLine()!.Split(' ');
-                program.server.server.Stop();
                 try
                 {
                     switch (command[0])
@@ -135,6 +137,7 @@ namespace Capstone_Referecne_GameServer
             server.Start();
             HeartBeatTimer.Change(0, 50000);
             messageProcess_thread.Start();
+            stopwatch.Start();
         }
 
         // 프로그램 실행할 때 커맨드로 들어온 값들을 읽어들임
@@ -174,7 +177,7 @@ namespace Capstone_Referecne_GameServer
                 }
             }
 
-            
+            /*
             Console.WriteLine("타입 : " + config.QuizType);
             Console.WriteLine("제목 : " + config.Title);
             Console.WriteLine("시간 : " + config.Time);
@@ -182,7 +185,7 @@ namespace Capstone_Referecne_GameServer
             {
                 Console.WriteLine("문제 : " + item);
             }
-            
+            */
             return config;
         }
 
@@ -281,6 +284,7 @@ namespace Capstone_Referecne_GameServer
             generator.AddByte(Configuration.QuizType);
             generator.AddString(Configuration.Title);
             generator.AddInt(Configuration.Time);
+            generator.AddInt((int)stopwatch.ElapsedMilliseconds);
 
             if(Configuration.QuizType == QuizTypes.MULTIPLE_QUIZ)
             {
