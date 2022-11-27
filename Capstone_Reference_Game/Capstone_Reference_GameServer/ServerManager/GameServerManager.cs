@@ -37,7 +37,8 @@ namespace Capstone_Referecne_GameServer
         GameConfiguration Configuration { get; set; }
 
         // 게임 진행된 시간
-        Stopwatch stopwatch = new Stopwatch();
+        private Stopwatch stopwatch = new Stopwatch();
+        private Timer gameTimer;
 
         static void Main(string[] args)
         {
@@ -122,8 +123,8 @@ namespace Capstone_Referecne_GameServer
             // 서버와 클라이언트가 계속 연결되어있는지 확인하기 위해 일정시간마다 가짜 메시지를 보내는 타이머
             TimerCallback tc = new TimerCallback(HeartBeat);
             HeartBeatTimer = new System.Threading.Timer(tc, null, Timeout.Infinite, Timeout.Infinite);
-
             
+            gameTimer = new Timer(new TimerCallback(TimerEnd), null, Timeout.Infinite, Timeout.Infinite);
         }
 
         ~GameServerManager()
@@ -137,7 +138,23 @@ namespace Capstone_Referecne_GameServer
             server.Start();
             HeartBeatTimer.Change(0, 50000);
             messageProcess_thread.Start();
-            stopwatch.Start();
+            
+            if (Configuration.Time > 0)
+            {
+                stopwatch.Start();
+                gameTimer.Change(Configuration.Time * 1000, Timeout.Infinite);
+            }
+
+            // 결과를 반환하는 파일을 초기화 시킴
+            StreamWriter sw = new StreamWriter(new FileStream("result.txt", FileMode.Create));
+            sw.Close();
+        }
+
+        public void TimerEnd(object? o)
+        {
+            Console.WriteLine("[INFO] 시간 종료");
+            MessageGenerator generator = new MessageGenerator(Protocols.S_GAME_END);
+            SendMessageToAll(generator.Generate());
         }
 
         // 프로그램 실행할 때 커맨드로 들어온 값들을 읽어들임
@@ -177,15 +194,7 @@ namespace Capstone_Referecne_GameServer
                 }
             }
 
-            /*
-            Console.WriteLine("타입 : " + config.QuizType);
-            Console.WriteLine("제목 : " + config.Title);
-            Console.WriteLine("시간 : " + config.Time);
-            foreach (var item in config.Questions)
-            {
-                Console.WriteLine("문제 : " + item);
-            }
-            */
+            
             return config;
         }
 
@@ -346,7 +355,7 @@ namespace Capstone_Referecne_GameServer
         {
             QuizType = QuizTypes.OX_QUIZ;
             Title = "";
-            Time = 0;
+            Time = 10;
             Questions = new List<string>();
 
         }

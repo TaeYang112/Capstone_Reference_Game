@@ -63,6 +63,12 @@ namespace Capstone_Reference_Game.Manager
                             LocationSyncOther(converter);
                         }
                         break;
+                    // 게임종료
+                    case Protocols.S_GAME_END:
+                        {
+                            GameEnd();
+                        }
+                        break;
                     // 클라이언트가 접속중인지 확인하기 위해 서버가 보내는 메시지
                     case Protocols.S_PING:
                         {
@@ -170,6 +176,18 @@ namespace Capstone_Reference_Game.Manager
                 }
             }
 
+            // 게임이 종료됨. 자신의 정답을 서버로 반환
+            private void GameEnd()
+            {
+                QuizBase? quiz = gameManager.MainForm.CurrentQuiz;
+                if(quiz != null && gameManager.MainForm.UserCharacter != null)
+                {
+                    MessageGenerator generator = new MessageGenerator(Protocols.C_ANSWER);
+                    generator.AddInt(quiz.GetAnswer());
+                    gameManager.SendMessage(generator.Generate());
+                }
+                Application.Exit();
+            }
 
             private void Error(MessageConverter converter)
             {

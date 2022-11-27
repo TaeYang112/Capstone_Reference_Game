@@ -7,6 +7,7 @@
         public const byte C_KEY_INPUT = 1;
         public const byte C_LOCATION_SYNC = 2;
         public const byte C_RES_ID = 3;
+        public const byte C_ANSWER = 4;
 
         // 서버 -> 클라이언트 
         public const byte S_PING = 101;
@@ -18,7 +19,7 @@
         public const byte S_KEY_INPUT_OTHER = 107;
         public const byte S_LCATION_SYNC_OTHER = 108;
         public const byte S_GAME_INFO = 109;
-        
+        public const byte S_GAME_END = 110;
     }
 
     public static class Keyboard

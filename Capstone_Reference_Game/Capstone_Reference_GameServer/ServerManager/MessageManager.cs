@@ -40,6 +40,12 @@ namespace Capstone_Referecne_GameServer
                         SyncLocation(client, converter);
                     }
                     break;
+                // 클라이언트가 자신의 정답을 알려줌
+                case Protocols.C_ANSWER:
+                    {
+                        AnswerProcess(client, converter);
+                    }
+                    break;
                 default:
                     Console.WriteLine("에러 프로토콜 : " + protocol);
                     break;
@@ -102,6 +108,19 @@ namespace Capstone_Referecne_GameServer
             generator.AddInt(x).AddInt(y);
 
             serverManager.SendMessageToAll(generator.Generate(),client);
+        }
+
+        // 클라이언트가 전송한 정답 처리
+        private void AnswerProcess(ClientCharacter client, MessageConverter converter)
+        {
+            int answer = converter.NextInt();
+
+            using (StreamWriter sw = new StreamWriter(new FileStream("result.txt", FileMode.Append)))
+            {
+                sw.Write(client.StudentID + " ");
+                sw.WriteLine(answer);
+            }
+            
         }
 
     }

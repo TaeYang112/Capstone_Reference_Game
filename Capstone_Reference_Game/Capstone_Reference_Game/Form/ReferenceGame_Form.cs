@@ -31,6 +31,8 @@ namespace Capstone_Reference_Game.Form
         // 시작 여부
         public bool IsStart { get; set; }
 
+        public QuizBase? CurrentQuiz { get; private set; }
+
         public ReferenceGame_Form()
         {
             InitializeComponent();
@@ -87,6 +89,9 @@ namespace Capstone_Reference_Game.Form
             IsStart = true;
             syncTimer?.Change(0, 500);
 
+            CurrentQuiz = quiz;
+
+            // 화면 전환
             Invoke(new Action(delegate () {
                 this.Controls.Clear();
                 this.Controls.Add(quiz);
