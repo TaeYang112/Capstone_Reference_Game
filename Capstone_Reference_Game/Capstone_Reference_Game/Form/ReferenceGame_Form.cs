@@ -63,18 +63,19 @@ namespace Capstone_Reference_Game.Form
             IsStart = true;
             syncTimer?.Change(0, 500);
 
-            OXQuiz oXQuizForm = new OXQuiz(UserCharacter, Clients);
-            oXQuizForm.SetTitle("sdfdf");
-            ChangeScreen(oXQuizForm);
-            oXQuizForm.Start();
+            ShowingQuiz?.Start();
         }
 
         // 보여질 화면 변경
         public void ChangeScreen(QuizBase newScreen)
         {
-            this.Controls.Clear();
-            this.Controls.Add(newScreen);
-            ShowingQuiz = newScreen;
+            Invoke(new Action(delegate () { 
+                this.Controls.Clear();
+                this.Controls.Add(newScreen);
+                ShowingQuiz = newScreen;
+                GameStart();
+            }));
+            
         }
         
         private void LocationSync(object? o)
@@ -87,6 +88,27 @@ namespace Capstone_Reference_Game.Form
 
                 GameManager.SendMessage(generator.Generate());
             }
+        }
+
+        public void SettingGame(byte type, string title, int time, List<string>? questions)
+        {
+            QuizBase? quiz;
+            if(type == QuizTypes.OX_QUIZ)
+            {
+                quiz = new OXQuiz(UserCharacter,Clients);
+            }
+            else
+            {
+                MultipleQuiz mQuiz = new MultipleQuiz(UserCharacter, Clients);
+                mQuiz.SetQuestions(questions!);
+                quiz = mQuiz;
+            }
+
+            quiz.SetTitle(title);
+            quiz.SetTargetTime(time);
+
+            ChangeScreen(quiz);
+
         }
 
         #region Input Process

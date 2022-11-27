@@ -45,6 +45,12 @@ namespace Capstone_Reference_Game.Manager
                             AddOtherClient(converter);
                         }
                         break;
+                    // 게임 정보를 넘겨줌
+                    case Protocols.S_GAME_INFO:
+                        {
+                            SettingGame(converter);
+                        }
+                        break;
                     // 다른클라이언트의 키 입력 수신
                     case Protocols.S_KEY_INPUT_OTHER:
                         {
@@ -105,6 +111,28 @@ namespace Capstone_Reference_Game.Manager
 
                 // 딕셔너리에 추가
                 gameManager.MainForm.Clients.TryAdd(key, client);
+            }
+
+            //
+            private void SettingGame(MessageConverter converter)
+            {
+                byte quizType = converter.NextByte();
+                string title = converter.NextString();
+                int time = converter.NextInt();
+
+                List<string>? questions = null;
+                if(quizType == QuizTypes.MULTIPLE_QUIZ)
+                {
+                    int count = converter.NextInt();
+                    questions = new List<string>();
+
+                    for(int i = 0; i < count; i++)
+                    {
+                        questions.Add(converter.NextString());
+                    }
+                }
+
+                gameManager.MainForm.SettingGame(quizType, title, time, questions);
             }
 
             // 다른 클라이언트의 키 입력 처리

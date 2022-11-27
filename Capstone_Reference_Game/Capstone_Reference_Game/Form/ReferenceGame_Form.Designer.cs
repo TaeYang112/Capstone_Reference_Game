@@ -36,8 +36,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1024, 600);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ReferenceGame_Form";
-            this.Text = "ReferecneGame_Form";
+            this.Text = "ReferecneGame";
             this.Deactivate += new System.EventHandler(this.Form_Deactivate);
             this.Load += new System.EventHandler(this.ReferecneGame_Form_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form_KeyUp);

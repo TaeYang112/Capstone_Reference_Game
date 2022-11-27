@@ -56,7 +56,7 @@ namespace Capstone_Referecne_GameServer
         {
             string studentID = converter.NextString();
             client.StudentID = studentID;
-            Console.WriteLine($"[INFO] [{studentID}] 님이 서버에 접속하였습니다.");
+            Console.WriteLine($"[INFO] [{studentID}]님이 서버에 접속하였습니다.");
 
             // 게임과 관련된 온갖 정보를 넘겨줌
             serverManager.SendGameInfo(client);

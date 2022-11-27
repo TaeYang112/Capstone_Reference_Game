@@ -21,10 +21,8 @@ namespace Capstone_Referecne_GameServer
         // 수신받은 메시지 보관하는 큐
         ConcurrentQueue<KeyValuePair<ClientCharacter, byte[]>> messageQueue;
 
-
         // 클라이언트들을 관리하는 객체
         public ClientManager clientManager { get; }
-
 
         // 메시지 처리하는 객체
         private MessageManager messageManager;
@@ -32,11 +30,11 @@ namespace Capstone_Referecne_GameServer
         // 서버와 클라이언트가 계속 연결되어있는지 확인하기 위해 일정시간마다 가짜 메시지를 보냄
         private Timer HeartBeatTimer;
 
-        // 하나의 클라이언트가 여러번 나가는거를 막기위한 세마포
-        private Semaphore sema_ClientLeave;
-
         // 메시지가 없으면 대기하기 위한 락 오브젝트
         object lockObject = new object();
+
+        // 게임 설정
+        GameConfiguration Configuration { get; set; }
 
         static void Main(string[] args)
         {
@@ -115,8 +113,6 @@ namespace Capstone_Referecne_GameServer
 
             clientManager = new ClientManager();
 
-            sema_ClientLeave = new Semaphore(1, 1);
-
             messageQueue = new ConcurrentQueue<KeyValuePair<ClientCharacter, byte[]>>();
             messageProcess_thread = new Thread(MessageProcess);
             messageManager = new MessageManager(this);
@@ -125,7 +121,7 @@ namespace Capstone_Referecne_GameServer
             TimerCallback tc = new TimerCallback(HeartBeat);
             HeartBeatTimer = new System.Threading.Timer(tc, null, Timeout.Infinite, Timeout.Infinite);
 
-
+            
         }
 
         ~GameServerManager()
@@ -135,9 +131,59 @@ namespace Capstone_Referecne_GameServer
 
         public void Start()
         {
+            Configuration =  LoadConfig();
             server.Start();
             HeartBeatTimer.Change(0, 50000);
             messageProcess_thread.Start();
+        }
+
+        // 프로그램 실행할 때 커맨드로 들어온 값들을 읽어들임
+        private GameConfiguration LoadConfig()
+        {
+            GameConfiguration config = new GameConfiguration();
+
+            // 타입, 제목, 타이머, [문제1, 문제2..]
+            string[] commands = Environment.GetCommandLineArgs();
+            if(commands.Length >=4)
+            {
+                if(commands[1] == "OXQUIZ")
+                {
+                    config.QuizType = QuizTypes.OX_QUIZ;
+                }
+                else
+                {
+                    config.QuizType = QuizTypes.MULTIPLE_QUIZ;
+                }
+
+                config.Title = commands[2];
+                int temp;
+                bool isNumber = int.TryParse(commands[3],out temp);
+                if(isNumber)
+                {
+                    config.Time = temp; ;
+                }
+                else config.Time = 0;
+            }
+
+            if(config.QuizType == QuizTypes.MULTIPLE_QUIZ)
+            {
+                int count = commands.Length - 4;
+                for(int i = 0; i< count; i++)
+                {
+                    config.Questions.Add(commands[i + 4]);
+                }
+            }
+
+            
+            Console.WriteLine("타입 : " + config.QuizType);
+            Console.WriteLine("제목 : " + config.Title);
+            Console.WriteLine("시간 : " + config.Time);
+            foreach (var item in config.Questions)
+            {
+                Console.WriteLine("문제 : " + item);
+            }
+            
+            return config;
         }
 
         // 서버와 클라이언트가 계속 연결되어있는지 확인하기 위해 일정시간마다 가짜 메시지를 보냄
@@ -227,6 +273,25 @@ namespace Capstone_Referecne_GameServer
                 SendMessage(generator.Generate(), client);
                 generator.Clear();
             }
+
+            generator.Clear();
+            generator.Protocol = Protocols.S_GAME_INFO;
+
+            // 게임 정보
+            generator.AddByte(Configuration.QuizType);
+            generator.AddString(Configuration.Title);
+            generator.AddInt(Configuration.Time);
+
+            if(Configuration.QuizType == QuizTypes.MULTIPLE_QUIZ)
+            {
+                generator.AddInt(Configuration.Questions.Count);
+                foreach(var question in Configuration.Questions)
+                {
+                    generator.AddString(question);
+                }
+            }
+
+            SendMessage(generator.Generate(), client);
         }
         
         #region Event
@@ -254,7 +319,7 @@ namespace Capstone_Referecne_GameServer
             if(result == true)
             {
                 if(oldClient.StudentID != string.Empty)
-                    Console.WriteLine($"[INFO] {oldClient.StudentID}님이 접속을 종료하였습니다.");
+                    Console.WriteLine($"[INFO] [{oldClient.StudentID}]님이 접속을 종료하였습니다.");
             }
         }
 
@@ -269,6 +334,22 @@ namespace Capstone_Referecne_GameServer
             lock (lockObject) { Monitor.Pulse(lockObject); }
         }
         #endregion
+    }
+
+    struct GameConfiguration
+    {
+        public GameConfiguration()
+        {
+            QuizType = QuizTypes.OX_QUIZ;
+            Title = "";
+            Time = 0;
+            Questions = new List<string>();
+
+        }
+        public byte QuizType;
+        public string Title;
+        public int Time;
+        public List<string> Questions;
     }
 
 }

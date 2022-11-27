@@ -17,7 +17,7 @@
         public const byte S_USER_INFO_OTHER = 106;
         public const byte S_KEY_INPUT_OTHER = 107;
         public const byte S_LCATION_SYNC_OTHER = 108;
-
+        public const byte S_GAME_INFO = 109;
         
     }
 
@@ -27,5 +27,11 @@
         public const byte RIGHT = 1;
         public const byte UP = 2;
         public const byte DOWN = 3;
+    }
+
+    public static class QuizTypes
+    {
+        public const byte OX_QUIZ = 0;
+        public const byte MULTIPLE_QUIZ = 1;
     }
 }
