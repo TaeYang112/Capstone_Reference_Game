@@ -85,7 +85,7 @@ namespace Capstone_Reference_Game.Manager
             private void ResponseStudentID()
             {
                 MessageGenerator generator = new MessageGenerator(Protocols.C_RES_ID);
-                generator.AddString("201807027");
+                generator.AddString(gameManager.StudentID);
                 gameManager.SendMessage(generator.Generate());
             }
 

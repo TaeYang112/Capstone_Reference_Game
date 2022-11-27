@@ -61,14 +61,17 @@ namespace Capstone_Referecne_GameServer
             // 게임과 관련된 온갖 정보를 넘겨줌
             serverManager.SendGameInfo(client);
 
-            MessageGenerator generator = new MessageGenerator(Protocols.S_USER_INFO_OTHER);
-            generator.AddInt(client.Key);
-            generator.AddInt(client.Skin);
-            generator.AddInt(client.Location.X);
-            generator.AddInt(client.Location.Y);
+            if (studentID != "GUEST")
+            {
+                MessageGenerator generator = new MessageGenerator(Protocols.S_USER_INFO_OTHER);
+                generator.AddInt(client.Key);
+                generator.AddInt(client.Skin);
+                generator.AddInt(client.Location.X);
+                generator.AddInt(client.Location.Y);
 
-            // 다른 클라이언트들에게 들어온 클라이언트를 알려줌
-            serverManager.SendMessageToAll(generator.Generate(), client);
+                // 다른 클라이언트들에게 들어온 클라이언트를 알려줌
+                serverManager.SendMessageToAll(generator.Generate(), client);
+            }
         }
        
         // 클라이언트가 누른 키 처리

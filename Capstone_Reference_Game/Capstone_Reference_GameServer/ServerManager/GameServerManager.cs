@@ -268,7 +268,7 @@ namespace Capstone_Referecne_GameServer
             {
                 ClientCharacter otherClient = item.Value;
 
-                if (client.Key == otherClient.Key) continue;
+                if (client.Key == otherClient.Key || otherClient.StudentID == "GUEST") continue;
 
                 generator.AddInt(otherClient.Key);
                 generator.AddInt(otherClient.Skin);

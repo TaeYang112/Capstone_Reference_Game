@@ -32,6 +32,8 @@ namespace Capstone_Reference_Game.Manager
         // 메시지가 없으면 대기하기 위한 락 오브젝트
         object lockObject = new object();
 
+        public string StudentID { get; set; } = "GUEST";
+
         public GameManager(ReferenceGame_Form form)
         {
             this.MainForm = form;

@@ -36,8 +36,11 @@ namespace Capstone_Reference_Game.Form
             InitializeComponent();
             GameManager = new GameManager(this);
             
-            if(true)
+            string[] commands = Environment.GetCommandLineArgs();
+            if(commands.Length >= 2)
             {
+                GameManager.StudentID = commands[1];
+
                 UserCharacter = new ClientCharacter(-1, 0);
                 TimerCallback tc = new TimerCallback(LocationSync);
                 syncTimer = new System.Threading.Timer(tc,null,Timeout.Infinite, Timeout.Infinite);
