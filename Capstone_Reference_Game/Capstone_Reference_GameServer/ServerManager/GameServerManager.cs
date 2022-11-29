@@ -1,6 +1,7 @@
 ﻿using Capstone_Referecne_GameServer.Client;
 using Capstone_Referecne_GameServer.TCP;
 using Capstone_Reference_Game_Module;
+using Capstone_Reference_GameServer;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
@@ -27,89 +28,23 @@ namespace Capstone_Referecne_GameServer
         // 메시지 처리하는 객체
         private MessageManager messageManager;
 
-        // 서버와 클라이언트가 계속 연결되어있는지 확인하기 위해 일정시간마다 가짜 메시지를 보냄
-        private Timer HeartBeatTimer;
-
         // 메시지가 없으면 대기하기 위한 락 오브젝트
         object lockObject = new object();
 
         // 게임 설정
-        GameConfiguration Configuration { get; set; }
+        public GameConfiguration Configuration { get; set; }
 
         // 게임 진행된 시간
         private Stopwatch stopwatch = new Stopwatch();
-        private Timer gameTimer;
+        private System.Threading.Timer gameTimer;
 
-        static void Main(string[] args)
+        // 메인 폼
+        public GameServerForm ServerForm { get; private set; }
+
+        public GameServerManager(GameServerForm serverForm)
         {
-            GameServerManager program = new GameServerManager();
-            program.Start();
-            Console.WriteLine("[INFO] 서버가 시작되었습니다.");
-            while (true)
-            {
-                string[] command = Console.ReadLine()!.Split(' ');
-                try
-                {
-                    switch (command[0])
-                    {
-                        /*
-                        case "/r":
-                            {
-                                // 게임 강제 시작 및 맵 변경
-                                if (command.Length >= 2 && command.Length <= 3)
-                                {
-                                    int roomKey = int.Parse(command[1]);
-                                    Room room;
-                                    bool result = program.roomManager.RoomDic.TryGetValue(roomKey, out room);
-                                    if (result == false)
-                                    {
-                                        throw new Exception("[ERROR] 존재하지 않은 방입니다.");
-                                    }
+            this.ServerForm = serverForm;
 
-                                    int stageNum = 1;
-
-                                    if (command.Length == 3)
-                                    {
-                                        stageNum = int.Parse(command[2]);
-                                    }
-
-                                    if (room.IsGameStart == false)
-                                        room.GameStart();
-                                    room.MapChange(stageNum);
-
-                                    Console.WriteLine("[INFO] " + roomKey + "번 방을 시작하였습니다.");
-                                }
-                                else throw new Exception("[ERROR] 올바르지 않은 매개변수 개수입니다.");
-
-
-                            }
-                            break;
-                        */
-                        default:
-                            Console.WriteLine("[ERROR] 알수없는 명령어입니다.");
-                            break;
-                    }
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("[ERROR] 올바르지 않은 매개변수 형식입니다.");
-                    continue;
-                }
-                catch (ArgumentNullException)
-                {
-                    Console.WriteLine("[ERROR] 매개변수가 존재하지 않습니다.");
-                    continue;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    continue;
-                }
-            }
-        }
-
-        private GameServerManager()
-        {
             server = new MyServer();
             server.onClientJoin += new ClientJoinEventHandler(ClientJoin);
             server.onDataRecieve += new DataRecieveEventHandler(onDataRecieve);
@@ -119,25 +54,23 @@ namespace Capstone_Referecne_GameServer
 
             messageQueue = new ConcurrentQueue<KeyValuePair<ClientCharacter, byte[]>>();
             messageProcess_thread = new Thread(MessageProcess);
+            messageProcess_thread.IsBackground = true;
+
             messageManager = new MessageManager(this);
 
-            // 서버와 클라이언트가 계속 연결되어있는지 확인하기 위해 일정시간마다 가짜 메시지를 보내는 타이머
-            TimerCallback tc = new TimerCallback(HeartBeat);
-            HeartBeatTimer = new System.Threading.Timer(tc, null, Timeout.Infinite, Timeout.Infinite);
-            
-            gameTimer = new Timer(new TimerCallback(TimerEnd), null, Timeout.Infinite, Timeout.Infinite);
+            gameTimer = new System.Threading.Timer(new TimerCallback(TimerEnd), null, Timeout.Infinite, Timeout.Infinite);
         }
 
         ~GameServerManager()
         {
-            HeartBeatTimer.Dispose();
+            gameTimer.Dispose();
+
         }
 
-        public void Start()
+        public void Start(GameConfiguration config)
         {
-            Configuration =  LoadConfig();
+            Configuration = config;
             server.Start();
-            HeartBeatTimer.Change(0, 50000);
             messageProcess_thread.Start();
             
             if (Configuration.Time > 0)
@@ -146,9 +79,6 @@ namespace Capstone_Referecne_GameServer
                 gameTimer.Change(Configuration.Time * 1000, Timeout.Infinite);
             }
 
-            // 결과를 반환하는 파일을 초기화 시킴
-            StreamWriter sw = new StreamWriter(new FileStream("result.txt", FileMode.Create));
-            sw.Close();
         }
 
         public void TimerEnd(object? o)
@@ -157,58 +87,6 @@ namespace Capstone_Referecne_GameServer
             MessageGenerator generator = new MessageGenerator(Protocols.S_GAME_END);
             SendMessageToAll(generator.Generate());
         }
-
-        // 프로그램 실행할 때 커맨드로 들어온 값들을 읽어들임
-        private GameConfiguration LoadConfig()
-        {
-            GameConfiguration config = new GameConfiguration();
-
-            // 타입, 제목, 타이머, [문제1, 문제2..]
-            string[] commands = Environment.GetCommandLineArgs();
-            if(commands.Length >=4)
-            {
-                if(commands[1] == "OXQUIZ")
-                {
-                    config.QuizType = QuizTypes.OX_QUIZ;
-                }
-                else
-                {
-                    config.QuizType = QuizTypes.MULTIPLE_QUIZ;
-                }
-
-                config.Title = commands[2];
-                int temp;
-                bool isNumber = int.TryParse(commands[3],out temp);
-                if(isNumber)
-                {
-                    config.Time = temp; ;
-                }
-                else config.Time = 0;
-            }
-
-            if(config.QuizType == QuizTypes.MULTIPLE_QUIZ)
-            {
-                int count = commands.Length - 4;
-                for(int i = 0; i< count; i++)
-                {
-                    config.Questions.Add(commands[i + 4]);
-                }
-            }
-
-            
-            return config;
-        }
-
-        // 서버와 클라이언트가 계속 연결되어있는지 확인하기 위해 일정시간마다 가짜 메시지를 보냄
-        private void HeartBeat(object? t)
-        {
-            MessageGenerator generator = new MessageGenerator(Protocols.S_PING);
-            byte[] message = generator.Generate();
-
-            SendMessageToAll(message);
-        }
-
-
 
         // 큐에 들어온 메시지를 처리함
         private void MessageProcess()
@@ -366,7 +244,7 @@ namespace Capstone_Referecne_GameServer
         #endregion
     }
 
-    struct GameConfiguration
+    public struct GameConfiguration
     {
         public GameConfiguration()
         {
@@ -374,12 +252,13 @@ namespace Capstone_Referecne_GameServer
             Title = "";
             Time = 10;
             Questions = new List<string>();
-
+            Answer = 0;
         }
         public byte QuizType;
         public string Title;
         public int Time;
         public List<string> Questions;
+        public int Answer;
     }
 
 }

@@ -88,7 +88,7 @@ namespace Capstone_Reference_Game.Form
                         questions[i].Text = context[i];
                     }
                 }
-                else
+                else if(count == 4)
                 {
                     // 한 변의 길이
                     int sideDist = 190;

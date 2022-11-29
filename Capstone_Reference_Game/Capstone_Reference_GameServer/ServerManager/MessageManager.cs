@@ -1,5 +1,6 @@
 ﻿using Capstone_Referecne_GameServer.Client;
 using Capstone_Reference_Game_Module;
+using Capstone_Reference_GameServer.Controls;
 using System.Drawing;
 
 namespace Capstone_Referecne_GameServer
@@ -115,10 +116,11 @@ namespace Capstone_Referecne_GameServer
         {
             int answer = converter.NextInt();
 
-            using (StreamWriter sw = new StreamWriter(new FileStream("result.txt", FileMode.Append)))
+            // 결과창 가져옴
+            GameResult_Screen? control = serverManager.ServerForm.Controls["GameResult_Screen"] as GameResult_Screen;
+            if(control != null)
             {
-                sw.Write(client.StudentID + " ");
-                sw.WriteLine(answer);
+                control.AddResult(client.StudentID, answer);
             }
             
         }

@@ -60,6 +60,7 @@ namespace Capstone_Reference_Game.Manager
             messageProcess_thread.Start();
         }
 
+
         // 서버로부터 받은 메시지를 처리
         private void onDataRecieve(byte[] message)
         {

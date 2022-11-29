@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 namespace Capstone_Reference_Game
 {
 
-    abstract public partial class QuizBase : UserControl
+     public partial class QuizBase : UserControl
     {
         #region Basic
 
