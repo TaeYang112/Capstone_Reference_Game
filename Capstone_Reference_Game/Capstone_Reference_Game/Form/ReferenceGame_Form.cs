@@ -36,18 +36,28 @@ namespace Capstone_Reference_Game.Form
         public ReferenceGame_Form()
         {
             InitializeComponent();
-            GameManager = new GameManager(this);
             
+            // 프로세스 시작시 들어온 매개변수 분석
             string[] commands = Environment.GetCommandLineArgs();
-            if(commands.Length >= 2)
+            string ip = "127.0.0.1";
+            string studentID = "GUEST";
+
+            if (commands.Length >= 2)
             {
-                GameManager.StudentID = commands[1];
+                ip = commands[1];
+            }
+
+            if(commands.Length >= 3)
+            {
+                studentID = commands[2];
 
                 UserCharacter = new ClientCharacter(-1, 0);
                 TimerCallback tc = new TimerCallback(LocationSync);
                 syncTimer = new System.Threading.Timer(tc,null,Timeout.Infinite, Timeout.Infinite);
             }
 
+            GameManager = new GameManager(this,ip);
+            GameManager.StudentID = studentID;
             KeyPreview = true;
         }
 

@@ -34,12 +34,12 @@ namespace Capstone_Reference_Game.Manager
 
         public string StudentID { get; set; } = "GUEST";
 
-        public GameManager(ReferenceGame_Form form)
+        public GameManager(ReferenceGame_Form form, string ip)
         {
             this.MainForm = form;
 
             // 클라이언트 객체 생성
-            myClient = new MyClient();
+            myClient = new MyClient(ip);
 
             // 서버로부터 메시지를 받으면 onTakeMessage함수 호출
             myClient.onDataRecieve += onDataRecieve;

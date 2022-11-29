@@ -26,9 +26,11 @@ namespace Reference_Game.TCP
         // client를 실행시킬 스레드            
         private Thread client_tr;
 
+        private string ip;
 
-        public MyClient()
+        public MyClient(string ip)
         {
+            this.ip = ip;
             readByteData = new byte[5];
 
             // 클라이언트 생성
@@ -63,7 +65,7 @@ namespace Reference_Game.TCP
                 try
                 {
                     // 서버에 연결 ( 서버IP, 포트 )
-                    client.Connect("119.196.90.61", 28898);
+                    client.Connect(ip, 28898);
                 }
                 catch
                 {

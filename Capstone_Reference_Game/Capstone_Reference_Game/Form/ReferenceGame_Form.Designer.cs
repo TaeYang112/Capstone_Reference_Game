@@ -28,13 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(415, 287);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "서버와 연결시도중..";
             // 
             // ReferenceGame_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1024, 600);
+            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -44,9 +55,12 @@
             this.Load += new System.EventHandler(this.ReferecneGame_Form_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form_KeyUp);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private Label label1;
     }
 }
