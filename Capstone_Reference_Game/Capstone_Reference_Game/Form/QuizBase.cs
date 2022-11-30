@@ -38,6 +38,10 @@ namespace Capstone_Reference_Game
         // 카운트 다운 변수
         private int count;
 
+        public QuizBase() : this(null,new ConcurrentDictionary<int, ClientCharacter>())
+        {
+        }
+
         public QuizBase(ClientCharacter? user, ConcurrentDictionary<int, ClientCharacter> clients)
         {
             InitializeComponent();

@@ -4,7 +4,7 @@
 // ----- 서버 ------
 // -----------------
 
-namespace Capstone_Referecne_GameServer.TCP
+namespace Capstone_Reference_GameServer.TCP
 {
     public delegate void ClientJoinEventHandler(ClientData newClient);
     public delegate void ClientLeaveEventHandler(ClientData oldClient);

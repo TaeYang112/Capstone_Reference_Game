@@ -35,5 +35,6 @@
     {
         public const byte OX_QUIZ = 0;
         public const byte MULTIPLE_QUIZ = 1;
+        public const byte DESCRIPTIVE_QUIZ = 2;
     }
 }

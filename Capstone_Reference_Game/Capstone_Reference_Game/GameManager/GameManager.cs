@@ -1,5 +1,6 @@
 ﻿using Capstone_Reference_Game.Client;
 using Capstone_Reference_Game.Form;
+using Capstone_Reference_Game_Module;
 using Reference_Game.TCP;
 using System;
 using System.Collections.Concurrent;
@@ -33,6 +34,7 @@ namespace Capstone_Reference_Game.Manager
         object lockObject = new object();
 
         public string StudentID { get; set; } = "GUEST";
+        public string StudentName { get; set; } = " ";
 
         public GameManager(ReferenceGame_Form form, string ip)
         {
@@ -113,6 +115,18 @@ namespace Capstone_Reference_Game.Manager
         public void SendMessage(byte[] message)
         {
             myClient.SendMessage(message);
+        }
+
+        // 서버로 답안 정송
+        public void SendMyAnswer()
+        {
+            QuizBase? quiz = MainForm.CurrentQuiz;
+            if (quiz != null && MainForm.UserCharacter != null)
+            {
+                MessageGenerator generator = new MessageGenerator(Protocols.C_ANSWER);
+                generator.AddInt(quiz.GetAnswer());
+                SendMessage(generator.Generate());
+            }
         }
 
 

@@ -1,7 +1,7 @@
-﻿using Capstone_Referecne_GameServer.TCP;
+﻿using Capstone_Reference_GameServer.TCP;
 using System.Collections.Concurrent;
 
-namespace Capstone_Referecne_GameServer.Client
+namespace Capstone_Reference_GameServer.Client
 {
     // 클라이언트들을 관리하는 클래스
     public class ClientManager

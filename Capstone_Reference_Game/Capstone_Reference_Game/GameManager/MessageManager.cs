@@ -98,6 +98,7 @@ namespace Capstone_Reference_Game.Manager
             {
                 MessageGenerator generator = new MessageGenerator(Protocols.C_RES_ID);
                 generator.AddString(gameManager.StudentID);
+                generator.AddString(gameManager.StudentName);
                 gameManager.SendMessage(generator.Generate());
             }
 
@@ -185,13 +186,7 @@ namespace Capstone_Reference_Game.Manager
             // 게임이 종료됨. 자신의 정답을 서버로 반환
             private void GameEnd()
             {
-                QuizBase? quiz = gameManager.MainForm.CurrentQuiz;
-                if(quiz != null && gameManager.MainForm.UserCharacter != null)
-                {
-                    MessageGenerator generator = new MessageGenerator(Protocols.C_ANSWER);
-                    generator.AddInt(quiz.GetAnswer());
-                    gameManager.SendMessage(generator.Generate());
-                }
+                gameManager.SendMyAnswer();
                 Application.Exit();
             }
 

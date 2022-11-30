@@ -1,4 +1,4 @@
-﻿using Capstone_Referecne_GameServer;
+﻿using Capstone_Reference_GameServer;
 using Capstone_Reference_GameServer.Controls;
 using System;
 using System.Collections.Generic;
@@ -16,33 +16,21 @@ namespace Capstone_Reference_GameServer
     {
         public GameServerManager GameServerManager { get; private set; }
 
-        private Action? GameStartDelegate;
-        //public Action? GameStopDelegate;
-
-        public GameServerForm()
+        public GameServerForm(GameConfiguration config)
         {
             InitializeComponent();
             GameServerManager = new GameServerManager(this);
+            Controls.Add(new GameResult_Screen(this));
+            GameServerManager.Start(config);
         }
 
-        public GameServerForm(Action? GameStartCallback)
-        {
-            InitializeComponent();
-            GameStartDelegate = GameStartCallback;
-            //GameStopDelegate = GameStopCallback;
-
-            GameServerManager = new GameServerManager(this);
-        }
 
         private void GameServer_Load(object sender, EventArgs e)
         {
-            ChangeScreen(new GameSetting_Screen(this, GameStartDelegate));
+        
+            
         }
 
-        public void ChangeScreen(Control newControl)
-        {
-            Controls.Clear();
-            Controls.Add(newControl);
-        }
+
     }
 }

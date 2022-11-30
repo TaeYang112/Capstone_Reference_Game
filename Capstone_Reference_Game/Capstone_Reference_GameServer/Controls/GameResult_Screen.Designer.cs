@@ -28,37 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnl_Chart = new System.Windows.Forms.Panel();
             this.btn_GameStop = new System.Windows.Forms.Button();
             this.grid_Result = new System.Windows.Forms.DataGridView();
+            this.StudentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StudentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Answer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Result = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tlp_statistics = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.lbl_submitter = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lbl_CorrectAnswer = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lbl_AnswerPercent = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grid_Result)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tlp_statistics.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_Chart
             // 
             this.pnl_Chart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnl_Chart.Location = new System.Drawing.Point(12, 12);
+            this.pnl_Chart.Location = new System.Drawing.Point(15, 15);
             this.pnl_Chart.Name = "pnl_Chart";
-            this.pnl_Chart.Size = new System.Drawing.Size(408, 306);
+            this.pnl_Chart.Size = new System.Drawing.Size(545, 400);
             this.pnl_Chart.TabIndex = 3;
             // 
             // btn_GameStop
             // 
-            this.btn_GameStop.Location = new System.Drawing.Point(283, 324);
+            this.btn_GameStop.Location = new System.Drawing.Point(440, 520);
             this.btn_GameStop.Name = "btn_GameStop";
-            this.btn_GameStop.Size = new System.Drawing.Size(137, 64);
+            this.btn_GameStop.Size = new System.Drawing.Size(120, 65);
             this.btn_GameStop.TabIndex = 4;
             this.btn_GameStop.Text = "게임 종료";
             this.btn_GameStop.UseVisualStyleBackColor = true;
@@ -73,11 +77,12 @@
             this.grid_Result.BackgroundColor = System.Drawing.Color.White;
             this.grid_Result.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid_Result.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.StudentName,
             this.StudentID,
             this.Answer,
             this.Result});
             this.grid_Result.GridColor = System.Drawing.Color.White;
-            this.grid_Result.Location = new System.Drawing.Point(426, 12);
+            this.grid_Result.Location = new System.Drawing.Point(575, 15);
             this.grid_Result.MultiSelect = false;
             this.grid_Result.Name = "grid_Result";
             this.grid_Result.ReadOnly = true;
@@ -92,13 +97,21 @@
             this.grid_Result.RowTemplate.Height = 25;
             this.grid_Result.RowTemplate.ReadOnly = true;
             this.grid_Result.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.grid_Result.Size = new System.Drawing.Size(312, 376);
+            this.grid_Result.Size = new System.Drawing.Size(310, 570);
             this.grid_Result.TabIndex = 5;
+            // 
+            // StudentName
+            // 
+            this.StudentName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.StudentName.FillWeight = 35F;
+            this.StudentName.HeaderText = "이름";
+            this.StudentName.Name = "StudentName";
+            this.StudentName.ReadOnly = true;
             // 
             // StudentID
             // 
             this.StudentID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.StudentID.FillWeight = 40F;
+            this.StudentID.FillWeight = 35F;
             this.StudentID.HeaderText = "학번";
             this.StudentID.Name = "StudentID";
             this.StudentID.ReadOnly = true;
@@ -107,7 +120,7 @@
             // Answer
             // 
             this.Answer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Answer.FillWeight = 40F;
+            this.Answer.FillWeight = 20F;
             this.Answer.HeaderText = "정답";
             this.Answer.Name = "Answer";
             this.Answer.ReadOnly = true;
@@ -122,25 +135,25 @@
             this.Result.ReadOnly = true;
             this.Result.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // tableLayoutPanel1
+            // tlp_statistics
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lbl_submitter, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lbl_CorrectAnswer, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lbl_AnswerPercent, 1, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 324);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(265, 64);
-            this.tableLayoutPanel1.TabIndex = 6;
+            this.tlp_statistics.ColumnCount = 2;
+            this.tlp_statistics.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlp_statistics.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlp_statistics.Controls.Add(this.label1, 0, 0);
+            this.tlp_statistics.Controls.Add(this.lbl_submitter, 1, 0);
+            this.tlp_statistics.Controls.Add(this.label2, 0, 1);
+            this.tlp_statistics.Controls.Add(this.lbl_CorrectAnswer, 1, 1);
+            this.tlp_statistics.Controls.Add(this.label3, 0, 2);
+            this.tlp_statistics.Controls.Add(this.lbl_AnswerPercent, 1, 2);
+            this.tlp_statistics.Location = new System.Drawing.Point(15, 430);
+            this.tlp_statistics.Name = "tlp_statistics";
+            this.tlp_statistics.RowCount = 3;
+            this.tlp_statistics.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlp_statistics.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlp_statistics.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlp_statistics.Size = new System.Drawing.Size(410, 155);
+            this.tlp_statistics.TabIndex = 6;
             // 
             // label1
             // 
@@ -196,20 +209,36 @@
             this.lbl_AnswerPercent.TabIndex = 0;
             this.lbl_AnswerPercent.Text = "0%";
             // 
+            // label4
+            // 
+            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label4.Font = new System.Drawing.Font("웰컴체 Regular", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(440, 430);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(120, 75);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "00 : 00";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // timer
+            // 
+            this.timer.Interval = 1000;
+            // 
             // GameResult_Screen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.tlp_statistics);
             this.Controls.Add(this.grid_Result);
             this.Controls.Add(this.btn_GameStop);
             this.Controls.Add(this.pnl_Chart);
             this.Name = "GameResult_Screen";
-            this.Size = new System.Drawing.Size(750, 400);
+            this.Size = new System.Drawing.Size(900, 600);
             this.Load += new System.EventHandler(this.GameResult_Screen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid_Result)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.tlp_statistics.ResumeLayout(false);
+            this.tlp_statistics.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -219,15 +248,18 @@
         private Panel pnl_Chart;
         private Button btn_GameStop;
         private DataGridView grid_Result;
-        private DataGridViewTextBoxColumn StudentID;
-        private DataGridViewTextBoxColumn Answer;
-        private DataGridViewTextBoxColumn Result;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tlp_statistics;
         private Label label1;
         private Label lbl_submitter;
         private Label label2;
         private Label lbl_CorrectAnswer;
         private Label label3;
         private Label lbl_AnswerPercent;
+        private DataGridViewTextBoxColumn StudentName;
+        private DataGridViewTextBoxColumn StudentID;
+        private DataGridViewTextBoxColumn Answer;
+        private DataGridViewTextBoxColumn Result;
+        private Label label4;
+        private System.Windows.Forms.Timer timer;
     }
 }

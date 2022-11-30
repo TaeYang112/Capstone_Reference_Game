@@ -41,15 +41,17 @@ namespace Capstone_Reference_Game.Form
             string[] commands = Environment.GetCommandLineArgs();
             string ip = "127.0.0.1";
             string studentID = "GUEST";
+            string studentName = " ";
 
             if (commands.Length >= 2)
             {
                 ip = commands[1];
             }
 
-            if(commands.Length >= 3)
+            if(commands.Length >= 4)
             {
                 studentID = commands[2];
+                studentName = commands[3];
 
                 UserCharacter = new ClientCharacter(-1, 0);
                 TimerCallback tc = new TimerCallback(LocationSync);
@@ -58,6 +60,7 @@ namespace Capstone_Reference_Game.Form
 
             GameManager = new GameManager(this,ip);
             GameManager.StudentID = studentID;
+            GameManager.StudentName = studentName;
             KeyPreview = true;
         }
 

@@ -1,9 +1,9 @@
-﻿using Capstone_Referecne_GameServer.Client;
+﻿using Capstone_Reference_GameServer.Client;
 using Capstone_Reference_Game_Module;
 using Capstone_Reference_GameServer.Controls;
 using System.Drawing;
 
-namespace Capstone_Referecne_GameServer
+namespace Capstone_Reference_GameServer
 {
     public class MessageManager
     {
@@ -61,14 +61,14 @@ namespace Capstone_Referecne_GameServer
         //클라이언트가 보낸 학번 처리
         private void RecieveStudentID(ClientCharacter client, MessageConverter converter)
         {
-            string studentID = converter.NextString();
-            client.StudentID = studentID;
-            Console.WriteLine($"[INFO] [{studentID}]님이 서버에 접속하였습니다.");
+            client.StudentID = converter.NextString();
+            client.StudentName = converter.NextString();
+            Console.WriteLine($"[INFO] [{client.StudentID}]님이 서버에 접속하였습니다.");
 
             // 게임과 관련된 온갖 정보를 넘겨줌
             serverManager.SendGameInfo(client);
 
-            if (studentID != "GUEST")
+            if (client.StudentID != "GUEST")
             {
                 MessageGenerator generator = new MessageGenerator(Protocols.S_USER_INFO_OTHER);
                 generator.AddInt(client.Key);
@@ -120,7 +120,7 @@ namespace Capstone_Referecne_GameServer
             GameResult_Screen? control = serverManager.ServerForm.Controls["GameResult_Screen"] as GameResult_Screen;
             if(control != null)
             {
-                control.AddResult(client.StudentID, answer);
+                control.AddResult(client.StudentID, client.StudentName, answer);
             }
             
         }

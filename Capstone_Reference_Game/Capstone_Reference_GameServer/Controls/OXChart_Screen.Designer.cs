@@ -29,29 +29,19 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lbl_Title = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pnl_OChart = new System.Windows.Forms.Panel();
+            this.lbl_Title = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Red;
+            this.panel1.BackColor = System.Drawing.Color.LightCoral;
             this.panel1.Location = new System.Drawing.Point(102, 70);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 37);
             this.panel1.TabIndex = 0;
-            // 
-            // lbl_Title
-            // 
-            this.lbl_Title.Font = new System.Drawing.Font("웰컴체 Regular", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Title.Location = new System.Drawing.Point(0, 0);
-            this.lbl_Title.Name = "lbl_Title";
-            this.lbl_Title.Size = new System.Drawing.Size(408, 46);
-            this.lbl_Title.TabIndex = 1;
-            this.lbl_Title.Text = "제목";
-            this.lbl_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
@@ -73,23 +63,33 @@
             // 
             // pnl_OChart
             // 
-            this.pnl_OChart.BackColor = System.Drawing.Color.Blue;
+            this.pnl_OChart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(155)))), ((int)(((byte)(254)))));
             this.pnl_OChart.Location = new System.Drawing.Point(102, 70);
             this.pnl_OChart.Name = "pnl_OChart";
             this.pnl_OChart.Size = new System.Drawing.Size(100, 37);
             this.pnl_OChart.TabIndex = 1;
             // 
+            // lbl_Title
+            // 
+            this.lbl_Title.Font = new System.Drawing.Font("웰컴체 Regular", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Title.Location = new System.Drawing.Point(0, 0);
+            this.lbl_Title.Name = "lbl_Title";
+            this.lbl_Title.Size = new System.Drawing.Size(545, 56);
+            this.lbl_Title.TabIndex = 3;
+            this.lbl_Title.Text = "제목";
+            this.lbl_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // OXChart_Screen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lbl_Title);
             this.Controls.Add(this.pnl_OChart);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.lbl_Title);
             this.Controls.Add(this.panel1);
             this.Name = "OXChart_Screen";
-            this.Size = new System.Drawing.Size(408, 306);
+            this.Size = new System.Drawing.Size(545, 400);
             this.Load += new System.EventHandler(this.OXChart_Screen_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -99,9 +99,9 @@
         #endregion
 
         private Panel panel1;
-        private Label lbl_Title;
         private Label label1;
         private Label label2;
         private Panel pnl_OChart;
+        private Label lbl_Title;
     }
 }

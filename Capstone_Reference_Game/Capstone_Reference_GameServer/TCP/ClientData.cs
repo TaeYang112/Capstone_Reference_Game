@@ -4,7 +4,7 @@
 // ----- 서버 ------
 // -----------------
 
-namespace Capstone_Referecne_GameServer.TCP
+namespace Capstone_Reference_GameServer.TCP
 {
     // 클라이언트를 표현하는 클래스
     public class ClientData

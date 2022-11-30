@@ -1,5 +1,5 @@
-﻿using Capstone_Referecne_GameServer.Client;
-using Capstone_Referecne_GameServer.TCP;
+﻿using Capstone_Reference_GameServer.Client;
+using Capstone_Reference_GameServer.TCP;
 using Capstone_Reference_Game_Module;
 using Capstone_Reference_GameServer;
 using System.Collections.Concurrent;
@@ -9,7 +9,7 @@ using System.Diagnostics;
 // ----- 서버 ------
 // -----------------
 
-namespace Capstone_Referecne_GameServer
+namespace Capstone_Reference_GameServer
 {
     public class GameServerManager
     { 
@@ -32,7 +32,7 @@ namespace Capstone_Referecne_GameServer
         object lockObject = new object();
 
         // 게임 설정
-        public GameConfiguration Configuration { get; set; }
+        public GameConfiguration Configuration { get;private set; }
 
         // 게임 진행된 시간
         private Stopwatch stopwatch = new Stopwatch();

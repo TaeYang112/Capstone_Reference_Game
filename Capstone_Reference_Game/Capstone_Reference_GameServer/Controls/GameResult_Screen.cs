@@ -1,4 +1,4 @@
-﻿using Capstone_Referecne_GameServer;
+﻿using Capstone_Reference_GameServer;
 using Capstone_Reference_Game_Module;
 using System;
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ namespace Capstone_Reference_GameServer.Controls
             btn_GameStop.Enabled = false;
         }
 
-        public void AddResult(string studentId, int answer)
+        public void AddResult(string studentId, string studentName, int answer)
         {
             GameConfiguration config = serverForm.GameServerManager.Configuration;
             submitterCount++;
@@ -60,7 +60,7 @@ namespace Capstone_Reference_GameServer.Controls
                 else strAnswer = answer.ToString();
             }
 
-            if(1 == answer)
+            if(config.Answer == answer)
             {
                 AnswerCheck = "정답";
                 correctAnswerCount++;
@@ -76,13 +76,21 @@ namespace Capstone_Reference_GameServer.Controls
                     oxChart.AddResult(answer);
                 }
             }
+            else if(config.QuizType == QuizTypes.MULTIPLE_QUIZ)
+            {
+
+                MultipleChart_Screen? mQuiz = pnl_Chart.Controls[0] as MultipleChart_Screen;
+
+                if (mQuiz != null)
+                {
+                    mQuiz.AddResult(answer);
+                }
+                
+            }
 
             Invoke(new Action(() => {
                 // 그리드 뷰에 추가
-                grid_Result.Rows.Add(studentId, strAnswer,AnswerCheck);
-
-                // 그리드 정렬
-                grid_Result.Sort(grid_Result.Columns[2], ListSortDirection.Descending);
+                grid_Result.Rows.Add(studentName,studentId, strAnswer,AnswerCheck);
 
                 // 제출자, 정답자, 정답률 텍스트 변경
                 lbl_submitter.Text = submitterCount + "명";
@@ -103,7 +111,7 @@ namespace Capstone_Reference_GameServer.Controls
             }
             else
             {
-                MultipleChart_Screen multiChart = new MultipleChart_Screen(config.Title, config.Questions);
+                MultipleChart_Screen multiChart = new MultipleChart_Screen(config.Title, config.Questions, config.Answer);
                 pnl_Chart.Controls.Add(multiChart);
             }
         }

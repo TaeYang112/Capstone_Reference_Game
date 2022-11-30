@@ -18,11 +18,12 @@ namespace Capstone_Reference_GameServer.Controls
         {
             InitializeComponent();
             this.lbl_Title.Text = title;
+            new BarGraph();
         }
 
         private void OXChart_Screen_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         public void AddResult(int answer)
