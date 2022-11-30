@@ -8,7 +8,7 @@ namespace Capstone_Reference_Game
 {
 
      public partial class QuizBase : UserControl
-    {
+     {
         #region Basic
 
         // 유저 캐릭터 위에 있는 화살표

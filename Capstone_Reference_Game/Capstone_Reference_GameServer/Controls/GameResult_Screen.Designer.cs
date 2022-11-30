@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnl_Chart = new System.Windows.Forms.Panel();
             this.btn_GameStop = new System.Windows.Forms.Button();
             this.grid_Result = new System.Windows.Forms.DataGridView();
             this.StudentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,18 +46,19 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // pnl_Chart
             // 
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(408, 228);
-            this.panel1.TabIndex = 3;
+            this.pnl_Chart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnl_Chart.Location = new System.Drawing.Point(12, 12);
+            this.pnl_Chart.Name = "pnl_Chart";
+            this.pnl_Chart.Size = new System.Drawing.Size(408, 306);
+            this.pnl_Chart.TabIndex = 3;
             // 
             // btn_GameStop
             // 
-            this.btn_GameStop.Location = new System.Drawing.Point(283, 246);
+            this.btn_GameStop.Location = new System.Drawing.Point(283, 324);
             this.btn_GameStop.Name = "btn_GameStop";
-            this.btn_GameStop.Size = new System.Drawing.Size(137, 142);
+            this.btn_GameStop.Size = new System.Drawing.Size(137, 64);
             this.btn_GameStop.TabIndex = 4;
             this.btn_GameStop.Text = "게임 종료";
             this.btn_GameStop.UseVisualStyleBackColor = true;
@@ -65,6 +66,10 @@
             // 
             // grid_Result
             // 
+            this.grid_Result.AllowUserToAddRows = false;
+            this.grid_Result.AllowUserToDeleteRows = false;
+            this.grid_Result.AllowUserToResizeColumns = false;
+            this.grid_Result.AllowUserToResizeRows = false;
             this.grid_Result.BackgroundColor = System.Drawing.Color.White;
             this.grid_Result.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid_Result.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -78,6 +83,7 @@
             this.grid_Result.ReadOnly = true;
             this.grid_Result.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.grid_Result.RowHeadersVisible = false;
+            this.grid_Result.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
@@ -127,13 +133,13 @@
             this.tableLayoutPanel1.Controls.Add(this.lbl_CorrectAnswer, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lbl_AnswerPercent, 1, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 246);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 324);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(265, 142);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(265, 64);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // label1
@@ -197,9 +203,10 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.grid_Result);
             this.Controls.Add(this.btn_GameStop);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnl_Chart);
             this.Name = "GameResult_Screen";
             this.Size = new System.Drawing.Size(750, 400);
+            this.Load += new System.EventHandler(this.GameResult_Screen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid_Result)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -209,7 +216,7 @@
 
         #endregion
 
-        private Panel panel1;
+        private Panel pnl_Chart;
         private Button btn_GameStop;
         private DataGridView grid_Result;
         private DataGridViewTextBoxColumn StudentID;

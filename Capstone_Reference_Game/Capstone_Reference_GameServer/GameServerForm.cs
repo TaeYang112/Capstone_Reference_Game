@@ -16,15 +16,27 @@ namespace Capstone_Reference_GameServer
     {
         public GameServerManager GameServerManager { get; private set; }
 
+        private Action? GameStartDelegate;
+        //public Action? GameStopDelegate;
+
         public GameServerForm()
         {
             InitializeComponent();
             GameServerManager = new GameServerManager(this);
         }
 
+        public GameServerForm(Action? GameStartCallback)
+        {
+            InitializeComponent();
+            GameStartDelegate = GameStartCallback;
+            //GameStopDelegate = GameStopCallback;
+
+            GameServerManager = new GameServerManager(this);
+        }
+
         private void GameServer_Load(object sender, EventArgs e)
         {
-            ChangeScreen(new GameSetting_Screen(this));
+            ChangeScreen(new GameSetting_Screen(this, GameStartDelegate));
         }
 
         public void ChangeScreen(Control newControl)

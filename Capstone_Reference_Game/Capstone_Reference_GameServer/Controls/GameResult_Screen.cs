@@ -31,6 +31,8 @@ namespace Capstone_Reference_GameServer.Controls
         {
             MessageGenerator generator = new MessageGenerator(Protocols.S_GAME_END);
             serverForm.GameServerManager.SendMessageToAll(generator.Generate());
+
+            btn_GameStop.Enabled = false;
         }
 
         public void AddResult(string studentId, int answer)
@@ -63,6 +65,18 @@ namespace Capstone_Reference_GameServer.Controls
                 AnswerCheck = "정답";
                 correctAnswerCount++;
             }
+
+            // 차트 업데이트
+            if(config.QuizType == QuizTypes.OX_QUIZ)
+            {
+                OXChart_Screen? oxChart = pnl_Chart.Controls[0] as OXChart_Screen;
+
+                if(oxChart != null)
+                {
+                    oxChart.AddResult(answer);
+                }
+            }
+
             Invoke(new Action(() => {
                 // 그리드 뷰에 추가
                 grid_Result.Rows.Add(studentId, strAnswer,AnswerCheck);
@@ -77,6 +91,21 @@ namespace Capstone_Reference_GameServer.Controls
 
             }));
             
+        }
+
+        private void GameResult_Screen_Load(object sender, EventArgs e)
+        {
+            GameConfiguration config = serverForm.GameServerManager.Configuration;
+            if (config.QuizType == QuizTypes.OX_QUIZ)
+            {
+                OXChart_Screen oxChart = new OXChart_Screen(config.Title);
+                pnl_Chart.Controls.Add(oxChart);
+            }
+            else
+            {
+                MultipleChart_Screen multiChart = new MultipleChart_Screen(config.Title, config.Questions);
+                pnl_Chart.Controls.Add(multiChart);
+            }
         }
     }
 }

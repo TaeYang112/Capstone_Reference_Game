@@ -61,6 +61,8 @@ namespace Capstone_Referecne_GameServer
             gameTimer = new System.Threading.Timer(new TimerCallback(TimerEnd), null, Timeout.Infinite, Timeout.Infinite);
         }
 
+
+
         ~GameServerManager()
         {
             gameTimer.Dispose();

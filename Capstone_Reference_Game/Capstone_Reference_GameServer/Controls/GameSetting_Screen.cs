@@ -14,11 +14,18 @@ namespace Capstone_Reference_GameServer.Controls
 {
     public partial class GameSetting_Screen : UserControl
     {
+        private Action? GameStartDelegate;
+
         GameServerForm serverForm;
         public GameSetting_Screen(GameServerForm serverForm)
         {
             InitializeComponent();
             this.serverForm = serverForm;
+        }
+
+        public GameSetting_Screen(GameServerForm serverForm, Action? gameStartCallback) : this(serverForm)
+        {
+            GameStartDelegate = gameStartCallback;
         }
 
         private void btn_GameStart_Click(object sender, EventArgs e)
@@ -61,6 +68,9 @@ namespace Capstone_Reference_GameServer.Controls
             serverForm.GameServerManager.Start(config);
 
             serverForm.ChangeScreen(new GameResult_Screen(serverForm));
+
+            if(GameStartDelegate != null)
+                GameStartDelegate();
             
         }
     }
