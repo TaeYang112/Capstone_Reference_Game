@@ -16,11 +16,18 @@ namespace Capstone_Reference_GameServer
     {
         public GameServerManager GameServerManager { get; private set; }
 
+        private GameConfiguration config;
         public GameServerForm(GameConfiguration config)
         {
             InitializeComponent();
+            this.config = config;
             GameServerManager = new GameServerManager(this);
             Controls.Add(new GameResult_Screen(this));
+            
+        }
+
+        public void Start()
+        {
             GameServerManager.Start(config);
         }
 
