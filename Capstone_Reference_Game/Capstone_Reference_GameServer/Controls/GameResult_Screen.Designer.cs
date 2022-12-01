@@ -44,7 +44,7 @@
             this.lbl_CorrectAnswer = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lbl_AnswerPercent = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lbl_Time = new System.Windows.Forms.Label();
             this.timer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grid_Result)).BeginInit();
             this.tlp_statistics.SuspendLayout();
@@ -209,26 +209,27 @@
             this.lbl_AnswerPercent.TabIndex = 0;
             this.lbl_AnswerPercent.Text = "0%";
             // 
-            // label4
+            // lbl_Time
             // 
-            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.Font = new System.Drawing.Font("웰컴체 Regular", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(440, 430);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(120, 75);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "00 : 00";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_Time.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbl_Time.Font = new System.Drawing.Font("웰컴체 Regular", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Time.Location = new System.Drawing.Point(440, 430);
+            this.lbl_Time.Name = "lbl_Time";
+            this.lbl_Time.Size = new System.Drawing.Size(120, 75);
+            this.lbl_Time.TabIndex = 7;
+            this.lbl_Time.Text = "00:00";
+            this.lbl_Time.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // timer
             // 
             this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // GameResult_Screen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lbl_Time);
             this.Controls.Add(this.tlp_statistics);
             this.Controls.Add(this.grid_Result);
             this.Controls.Add(this.btn_GameStop);
@@ -259,7 +260,7 @@
         private DataGridViewTextBoxColumn StudentID;
         private DataGridViewTextBoxColumn Answer;
         private DataGridViewTextBoxColumn Result;
-        private Label label4;
+        private Label lbl_Time;
         private System.Windows.Forms.Timer timer;
     }
 }

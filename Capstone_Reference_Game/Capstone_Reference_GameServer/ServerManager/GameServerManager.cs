@@ -66,7 +66,7 @@ namespace Capstone_Reference_GameServer
         ~GameServerManager()
         {
             gameTimer.Dispose();
-
+            server.Stop();
         }
 
         public void Start(GameConfiguration config)
@@ -81,6 +81,11 @@ namespace Capstone_Reference_GameServer
                 gameTimer.Change(Configuration.Time * 1000, Timeout.Infinite);
             }
 
+        }
+
+        public void Stop()
+        {
+            server.Stop();
         }
 
         public void TimerEnd(object? o)

@@ -22,7 +22,9 @@ namespace Capstone_Reference_GameServer
             InitializeComponent();
             this.config = config;
             GameServerManager = new GameServerManager(this);
-            Controls.Add(new GameResult_Screen(this));
+            GameResult_Screen screen = new GameResult_Screen(this);
+            Controls.Add(screen);
+            screen.Start(config.Time);
             
         }
 
@@ -38,6 +40,9 @@ namespace Capstone_Reference_GameServer
             
         }
 
-
+        private void GameServerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            GameServerManager.Stop();
+        }
     }
 }

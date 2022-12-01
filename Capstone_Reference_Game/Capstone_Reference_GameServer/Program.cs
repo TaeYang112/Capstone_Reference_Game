@@ -29,7 +29,7 @@ namespace Capstone_Reference_GameServer
             GameConfiguration config2 = new GameConfiguration()
             {
                 Title = "집가고싶어",
-                Time = 30,
+                Time = 100,
                 Answer = 1,
                 QuizType = QuizTypes.MULTIPLE_QUIZ,
                 Questions = new List<string>() { "11", "22", "33" }

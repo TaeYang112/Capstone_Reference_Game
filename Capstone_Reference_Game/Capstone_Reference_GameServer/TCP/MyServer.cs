@@ -53,6 +53,11 @@ namespace Capstone_Reference_GameServer.TCP
             server_tr.Start();
         }
 
+        public void Stop()
+        {
+            server.Stop();
+        }
+
         private void WaitAndAcceptClient()
         {
             try
@@ -72,6 +77,11 @@ namespace Capstone_Reference_GameServer.TCP
             }
             catch(ThreadStateException)
             {
+                return;
+            }
+            catch(System.Net.Sockets.SocketException)
+            {
+                // 소켓 종료
                 return;
             }
 

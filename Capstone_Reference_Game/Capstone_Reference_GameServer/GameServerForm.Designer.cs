@@ -40,6 +40,7 @@
             this.MinimizeBox = false;
             this.Name = "GameServerForm";
             this.Text = "GameServer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameServerForm_FormClosing);
             this.Load += new System.EventHandler(this.GameServer_Load);
             this.ResumeLayout(false);
 

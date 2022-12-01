@@ -20,6 +20,8 @@ namespace Capstone_Reference_GameServer.Controls
         // 정답자 수
         private int correctAnswerCount = 0;
 
+        private int time;
+
         GameServerForm serverForm;
         public GameResult_Screen(GameServerForm serverForm)
         {
@@ -27,12 +29,27 @@ namespace Capstone_Reference_GameServer.Controls
             this.serverForm = serverForm;
         }
 
+        public void Start(int time)
+        {
+            if(time == 0)
+            {
+                lbl_Time.Text = "";
+            }
+            else
+            {
+                timer.Enabled = true;
+                this.time = time;
+                lbl_Time.Text = TimeToString(time);
+            }
+            
+        }
+
         private void btn_GameStop_Click(object sender, EventArgs e)
         {
             MessageGenerator generator = new MessageGenerator(Protocols.S_GAME_END);
             serverForm.GameServerManager.SendMessageToAll(generator.Generate());
-
-            btn_GameStop.Enabled = false;
+            
+            //btn_GameStop.Enabled = false;
         }
 
         public void AddResult(string studentId, string studentName, int answer)
@@ -114,6 +131,25 @@ namespace Capstone_Reference_GameServer.Controls
                 MultipleChart_Screen multiChart = new MultipleChart_Screen(config.Title, config.Questions, config.Answer);
                 pnl_Chart.Controls.Add(multiChart);
             }
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            time--;
+            lbl_Time.Text = TimeToString(time);
+            if (time == 0)
+            {
+                timer.Enabled = false;
+                btn_GameStop.Enabled = false;
+            }
+        }
+
+        private string TimeToString(int time)
+        {
+            int min = time / 60;
+            int sec = time % 60;
+            string result = string.Format("{0:D2}:{1:D2}",min, sec);
+            return result;
         }
     }
 }
