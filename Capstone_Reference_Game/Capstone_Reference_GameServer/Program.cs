@@ -38,7 +38,7 @@ namespace Capstone_Reference_GameServer
             GameConfiguration config3 = new GameConfiguration()
             {
                 Title = "집가고싶어",
-                Time = 100,
+                Time = 10,
                 QuizType = QuizTypes.DESCRIPTIVE_QUIZ
             };
 

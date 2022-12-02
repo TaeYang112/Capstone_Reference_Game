@@ -72,6 +72,8 @@ namespace Capstone_Reference_GameServer.Controls
             MessageGenerator generator = new MessageGenerator(Protocols.S_GAME_END);
             serverForm.GameServerManager.SendMessageToAll(generator.Generate());
             
+            timer.Enabled = false;
+            lbl_Time.Text = TimeToString(0);
             btn_GameStop.Enabled = false;
         }
 
@@ -140,7 +142,7 @@ namespace Capstone_Reference_GameServer.Controls
 
             Invoke(new Action(() => {
                 // 그리드 뷰에 추가
-                grid_Result.Rows.Add(studentName,studentId, strAnswer,AnswerCheck);
+                grid_Result.Rows.Add(studentId, studentName, strAnswer,AnswerCheck);
 
                 // 제출자, 정답자, 정답률 텍스트 변경
                 lbl_submitter.Text = submitterCount + "명";
@@ -177,8 +179,9 @@ namespace Capstone_Reference_GameServer.Controls
             int idx = e.RowIndex;
             if (idx < 0 || serverForm.GameServerManager.Configuration.QuizType != QuizTypes.DESCRIPTIVE_QUIZ) return;
 
-            string name = grid_Result[0, idx].Value.ToString()!;
-            string id = grid_Result[1, idx].Value.ToString()!;
+            string id = grid_Result[0, idx].Value.ToString()!;
+            string name = grid_Result[1, idx].Value.ToString()!;
+            
             string context = grid_Result[2, idx].Value.ToString()!;
 
             Descriptive_Screen? screen =  pnl_Chart.Controls[0] as Descriptive_Screen;
@@ -194,8 +197,9 @@ namespace Capstone_Reference_GameServer.Controls
             int idx = e.RowIndex;
             if (idx < 0 || serverForm.GameServerManager.Configuration.QuizType != QuizTypes.DESCRIPTIVE_QUIZ) return;
 
-            string name = grid_Result[0, idx].Value.ToString()!;
-            string id = grid_Result[1, idx].Value.ToString()!;
+            string id = grid_Result[0, idx].Value.ToString()!;
+            string name = grid_Result[1, idx].Value.ToString()!;
+            
             string context = grid_Result[2, idx].Value.ToString()!;
 
             Descriptive_Screen? screen = pnl_Chart.Controls[0] as Descriptive_Screen;

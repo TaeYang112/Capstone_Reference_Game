@@ -33,10 +33,6 @@
             this.pnl_Chart = new System.Windows.Forms.Panel();
             this.btn_GameStop = new System.Windows.Forms.Button();
             this.grid_Result = new System.Windows.Forms.DataGridView();
-            this.StudentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StudentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Answer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Result = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tlp_statistics = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.lbl_submitter = new System.Windows.Forms.Label();
@@ -46,6 +42,10 @@
             this.lbl_AnswerPercent = new System.Windows.Forms.Label();
             this.lbl_Time = new System.Windows.Forms.Label();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.StudentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StudentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Answer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Result = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid_Result)).BeginInit();
             this.tlp_statistics.SuspendLayout();
             this.SuspendLayout();
@@ -77,8 +77,8 @@
             this.grid_Result.BackgroundColor = System.Drawing.Color.White;
             this.grid_Result.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid_Result.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.StudentName,
             this.StudentID,
+            this.StudentName,
             this.Answer,
             this.Result});
             this.grid_Result.GridColor = System.Drawing.Color.White;
@@ -102,41 +102,6 @@
             this.grid_Result.TabIndex = 5;
             this.grid_Result.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_Result_CellClick);
             this.grid_Result.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_Result_RowEnter);
-            // 
-            // StudentName
-            // 
-            this.StudentName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.StudentName.FillWeight = 35F;
-            this.StudentName.HeaderText = "이름";
-            this.StudentName.Name = "StudentName";
-            this.StudentName.ReadOnly = true;
-            // 
-            // StudentID
-            // 
-            this.StudentID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.StudentID.FillWeight = 35F;
-            this.StudentID.HeaderText = "학번";
-            this.StudentID.Name = "StudentID";
-            this.StudentID.ReadOnly = true;
-            this.StudentID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Answer
-            // 
-            this.Answer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Answer.FillWeight = 20F;
-            this.Answer.HeaderText = "정답";
-            this.Answer.Name = "Answer";
-            this.Answer.ReadOnly = true;
-            this.Answer.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Result
-            // 
-            this.Result.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Result.FillWeight = 20F;
-            this.Result.HeaderText = "결과";
-            this.Result.Name = "Result";
-            this.Result.ReadOnly = true;
-            this.Result.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // tlp_statistics
             // 
@@ -228,6 +193,41 @@
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
+            // StudentID
+            // 
+            this.StudentID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.StudentID.FillWeight = 35F;
+            this.StudentID.HeaderText = "학번";
+            this.StudentID.Name = "StudentID";
+            this.StudentID.ReadOnly = true;
+            this.StudentID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // StudentName
+            // 
+            this.StudentName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.StudentName.FillWeight = 35F;
+            this.StudentName.HeaderText = "이름";
+            this.StudentName.Name = "StudentName";
+            this.StudentName.ReadOnly = true;
+            // 
+            // Answer
+            // 
+            this.Answer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Answer.FillWeight = 20F;
+            this.Answer.HeaderText = "정답";
+            this.Answer.Name = "Answer";
+            this.Answer.ReadOnly = true;
+            this.Answer.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Result
+            // 
+            this.Result.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Result.FillWeight = 20F;
+            this.Result.HeaderText = "결과";
+            this.Result.Name = "Result";
+            this.Result.ReadOnly = true;
+            this.Result.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
             // GameResult_Screen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -259,11 +259,11 @@
         private Label lbl_CorrectAnswer;
         private Label label3;
         private Label lbl_AnswerPercent;
-        private DataGridViewTextBoxColumn StudentName;
-        private DataGridViewTextBoxColumn StudentID;
-        private DataGridViewTextBoxColumn Answer;
-        private DataGridViewTextBoxColumn Result;
         private Label lbl_Time;
         private System.Windows.Forms.Timer timer;
+        private DataGridViewTextBoxColumn StudentID;
+        private DataGridViewTextBoxColumn StudentName;
+        private DataGridViewTextBoxColumn Answer;
+        private DataGridViewTextBoxColumn Result;
     }
 }

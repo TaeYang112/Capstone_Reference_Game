@@ -28,7 +28,9 @@ namespace Capstone_Reference_GameServer.Controls
         public void Update(string context, string StudentID, string StudentName)
         {
             lbl_Context.Text = context;
-            lbl_Name.Text = StudentID + "  " + StudentName;
+            lbl_ID.Text = "학번 : " + StudentID;
+            lbl_Name.Text = "이름 : " + StudentName;
+            label1.Text = "답안";
         }
 
     }
