@@ -22,15 +22,14 @@ namespace Capstone_Reference_GameServer
             InitializeComponent();
             this.config = config;
             GameServerManager = new GameServerManager(this);
-            GameResult_Screen screen = new GameResult_Screen(this);
-            Controls.Add(screen);
-            screen.Start(config.Time);
-            
         }
 
         public void Start()
         {
             GameServerManager.Start(config);
+            GameResult_Screen screen = new GameResult_Screen(this);
+            Controls.Add(screen);
+            screen.Start(config.Time);
         }
 
 

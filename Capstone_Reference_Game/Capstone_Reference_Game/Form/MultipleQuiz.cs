@@ -61,7 +61,6 @@ namespace Capstone_Reference_Game.Form
         {
             // 최대 5개까지 가능
             int count = Math.Min(context.Count,5);
-
             // 초기화
             questions = new Question[count];
 

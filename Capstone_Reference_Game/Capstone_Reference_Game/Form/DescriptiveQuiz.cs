@@ -1,5 +1,6 @@
 ﻿using Capstone_Reference_Game.Object;
 using Capstone_Reference_Game.Other;
+using Capstone_Reference_Game_Module;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Capstone_Reference_Game.Form
-{
-    /*
-    public partial class QuizBase : UserControl
+{ 
+    
+    public partial class DescriptiveQuiz : UserControl
     {
         // 매 프레임마다 Update를 호출시키는 타이머
         private System.Threading.Timer UpdateTimer;
@@ -30,9 +31,18 @@ namespace Capstone_Reference_Game.Form
         // 문제 큰 제목
         private string _title = string.Empty;
 
-        public DescriptiveQuiz()
+        ReferenceGame_Form mainForm;
+
+        public DescriptiveQuiz(ReferenceGame_Form mainForm)
         {
             InitializeComponent();
+            this.mainForm = mainForm;
+
+            // 60프레임 화면 업데이트
+            TimerCallback tc = new TimerCallback(Update);
+            UpdateTimer = new System.Threading.Timer(tc, null, Timeout.Infinite, Timeout.Infinite);
+
+            DoubleBuffered = true;
         }
 
         // 비관리 메모리 해제
@@ -76,7 +86,7 @@ namespace Capstone_Reference_Game.Form
         // 몇번 답을 골랐는지 반환
         public virtual string GetAnswer()
         {
-            return "";
+            return tb_MyAnswer.Text;
         }
 
         // 타임어택 설정
@@ -101,7 +111,7 @@ namespace Capstone_Reference_Game.Form
         // 화면 다시그리기
         protected virtual void Update(object? temp)
         {
-            Invalidate();
+            Invalidate(new Rectangle(progressBar.Location, progressBar.Size));
         }
 
 
@@ -111,7 +121,22 @@ namespace Capstone_Reference_Game.Form
             lbl_ProblemTitle.Draw(e.Graphics);
         }
 
+
         #endregion
+
+        private void DescriptiveQuiz_Load(object sender, EventArgs e)
+        {
+            UpdateTimer.Change(0, 15);
+        }
+
+        private void btn_SendAnswer_Click(object sender, EventArgs e)
+        {
+            if (mainForm.GameManager.StudentName != "GUEST")
+            {
+                mainForm.GameManager.SendMyAnswer();
+            }
+            Application.Exit();
+        }
     }
-    */
+    
 }

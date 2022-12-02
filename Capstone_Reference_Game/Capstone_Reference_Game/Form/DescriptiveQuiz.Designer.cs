@@ -1,5 +1,5 @@
 ﻿namespace Capstone_Reference_Game.Form
-{/*
+{
     partial class DescriptiveQuiz
     {
         /// <summary> 
@@ -28,26 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb_MyAnswer = new System.Windows.Forms.TextBox();
+            this.btn_SendAnswer = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tb_MyAnswer
             // 
-            this.textBox1.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox1.Location = new System.Drawing.Point(271, 196);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(481, 33);
-            this.textBox1.TabIndex = 0;
+            this.tb_MyAnswer.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tb_MyAnswer.Location = new System.Drawing.Point(259, 188);
+            this.tb_MyAnswer.Multiline = true;
+            this.tb_MyAnswer.Name = "tb_MyAnswer";
+            this.tb_MyAnswer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tb_MyAnswer.Size = new System.Drawing.Size(481, 228);
+            this.tb_MyAnswer.TabIndex = 0;
+            // 
+            // btn_SendAnswer
+            // 
+            this.btn_SendAnswer.Location = new System.Drawing.Point(460, 461);
+            this.btn_SendAnswer.Name = "btn_SendAnswer";
+            this.btn_SendAnswer.Size = new System.Drawing.Size(92, 52);
+            this.btn_SendAnswer.TabIndex = 1;
+            this.btn_SendAnswer.Text = "전송";
+            this.btn_SendAnswer.UseVisualStyleBackColor = true;
+            this.btn_SendAnswer.Click += new System.EventHandler(this.btn_SendAnswer_Click);
             // 
             // DescriptiveQuiz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Capstone_Reference_Game.Properties.Resources.MultipleQuizeBackground;
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btn_SendAnswer);
+            this.Controls.Add(this.tb_MyAnswer);
             this.Name = "DescriptiveQuiz";
             this.Size = new System.Drawing.Size(1024, 600);
+            this.Load += new System.EventHandler(this.DescriptiveQuiz_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -55,7 +70,8 @@
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox tb_MyAnswer;
+        private Button btn_SendAnswer;
     }
-    */
+
 }

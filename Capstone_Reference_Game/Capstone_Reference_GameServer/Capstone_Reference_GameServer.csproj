@@ -12,4 +12,10 @@
     <ProjectReference Include="..\Reference_Game_Moudle\Reference_Game_Module.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Controls\MultipleChart_Screen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

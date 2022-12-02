@@ -36,6 +36,8 @@ namespace Capstone_Reference_Game.Manager
         public string StudentID { get; set; } = "GUEST";
         public string StudentName { get; set; } = " ";
 
+        public GameConfiguration Config { get; set; }
+
         public GameManager(ReferenceGame_Form form, string ip)
         {
             this.MainForm = form;
@@ -120,16 +122,50 @@ namespace Capstone_Reference_Game.Manager
         // 서버로 답안 정송
         public void SendMyAnswer()
         {
-            QuizBase? quiz = MainForm.CurrentQuiz;
-            if (quiz != null && MainForm.UserCharacter != null)
+            if (StudentID == "GUEST")
+                return;
+
+            MessageGenerator generator = new MessageGenerator(Protocols.C_ANSWER);
+            GameConfiguration config =  MainForm.GameManager.Config;
+            // OX 혹은 다지선다 문제는 int형으로 보냄
+            if (config.QuizType != QuizTypes.DESCRIPTIVE_QUIZ)
             {
-                MessageGenerator generator = new MessageGenerator(Protocols.C_ANSWER);
-                generator.AddInt(quiz.GetAnswer());
-                SendMessage(generator.Generate());
+                QuizBase? quiz = MainForm.Controls[0] as QuizBase;
+                if (quiz != null)
+                {
+                    generator.AddInt(quiz.GetAnswer());
+                    SendMessage(generator.Generate());
+                }
             }
+            // 서술형은 string 형으로 보냄
+            else
+            {
+                DescriptiveQuiz? dQuiz = MainForm.Controls["DescriptiveQuiz"] as DescriptiveQuiz;
+                if (dQuiz != null)
+                {
+                    generator.AddString(dQuiz.GetAnswer());
+                    SendMessage(generator.Generate());
+                }
+            }
+            
         }
 
 
+    }
+
+    public struct GameConfiguration
+    {
+        public GameConfiguration()
+        {
+            QuizType = QuizTypes.OX_QUIZ;
+            Title = "";
+            Time = 10;
+            Questions = new List<string>();
+        }
+        public byte QuizType;
+        public string Title;
+        public int Time;
+        public List<string> Questions;
     }
 }
 

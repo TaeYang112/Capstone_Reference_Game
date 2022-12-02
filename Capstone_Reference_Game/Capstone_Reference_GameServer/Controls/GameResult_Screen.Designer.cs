@@ -60,9 +60,9 @@
             // 
             // btn_GameStop
             // 
-            this.btn_GameStop.Location = new System.Drawing.Point(440, 520);
+            this.btn_GameStop.Location = new System.Drawing.Point(440, 515);
             this.btn_GameStop.Name = "btn_GameStop";
-            this.btn_GameStop.Size = new System.Drawing.Size(120, 65);
+            this.btn_GameStop.Size = new System.Drawing.Size(120, 70);
             this.btn_GameStop.TabIndex = 4;
             this.btn_GameStop.Text = "게임 종료";
             this.btn_GameStop.UseVisualStyleBackColor = true;
@@ -91,14 +91,17 @@
             this.grid_Result.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(239)))), ((int)(((byte)(239)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
             this.grid_Result.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.grid_Result.RowTemplate.Height = 25;
             this.grid_Result.RowTemplate.ReadOnly = true;
             this.grid_Result.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.grid_Result.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grid_Result.Size = new System.Drawing.Size(310, 570);
             this.grid_Result.TabIndex = 5;
+            this.grid_Result.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_Result_CellClick);
+            this.grid_Result.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_Result_RowEnter);
             // 
             // StudentName
             // 
@@ -215,7 +218,7 @@
             this.lbl_Time.Font = new System.Drawing.Font("웰컴체 Regular", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lbl_Time.Location = new System.Drawing.Point(440, 430);
             this.lbl_Time.Name = "lbl_Time";
-            this.lbl_Time.Size = new System.Drawing.Size(120, 75);
+            this.lbl_Time.Size = new System.Drawing.Size(120, 70);
             this.lbl_Time.TabIndex = 7;
             this.lbl_Time.Text = "00:00";
             this.lbl_Time.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

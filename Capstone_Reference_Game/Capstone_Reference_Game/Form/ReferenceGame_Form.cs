@@ -1,16 +1,7 @@
 ﻿using Capstone_Reference_Game.Client;
 using Capstone_Reference_Game.Manager;
 using Capstone_Reference_Game_Module;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Capstone_Reference_Game.Form
 {
@@ -30,8 +21,6 @@ namespace Capstone_Reference_Game.Form
 
         // 시작 여부
         public bool IsStart { get; set; }
-
-        public QuizBase? CurrentQuiz { get; private set; }
 
         public ReferenceGame_Form()
         {
@@ -81,33 +70,51 @@ namespace Capstone_Reference_Game.Form
             }
         }
 
-        public void GameStart(byte type, string title, int targetTime, int currentTime,List<string>? questions)
+        public void GameStart(GameConfiguration config, int currentTime)
         {
-            QuizBase? quiz;
-            if(type == QuizTypes.OX_QUIZ)
+            GameManager.Config = config;
+            Control? screen;
+            if (config.QuizType == QuizTypes.DESCRIPTIVE_QUIZ)
             {
-                quiz = new OXQuiz(UserCharacter,Clients);
+                DescriptiveQuiz dQuiz = new DescriptiveQuiz(this);
+
+                dQuiz.SetTitle(config.Title);
+                dQuiz.SetTargetTime(config.Time, currentTime);
+                
+                dQuiz.Start();
+
+                screen = dQuiz;
             }
             else
             {
-                MultipleQuiz mQuiz = new MultipleQuiz(UserCharacter, Clients);
-                mQuiz.SetQuestions(questions!);
-                quiz = mQuiz;
+                QuizBase? quiz;
+                if (config.QuizType == QuizTypes.OX_QUIZ)
+                {
+                    quiz = new OXQuiz(UserCharacter, Clients);
+                }
+                else
+                {
+                    MultipleQuiz mQuiz = new MultipleQuiz(UserCharacter, Clients);
+                    mQuiz.SetQuestions(config.Questions);
+                    quiz = mQuiz;
+                }
+
+                quiz.SetTitle(config.Title);
+                quiz.SetTargetTime(config.Time, currentTime);
+
+                quiz.Start();
+                
+                screen = quiz;
             }
 
-            quiz.SetTitle(title);
-            quiz.SetTargetTime(targetTime, currentTime);
-
-            quiz.Start();
             IsStart = true;
             syncTimer?.Change(0, 500);
 
-            CurrentQuiz = quiz;
 
             // 화면 전환
             Invoke(new Action(delegate () {
                 this.Controls.Clear();
-                this.Controls.Add(quiz);
+                this.Controls.Add(screen);
             }));
 
         }
@@ -151,6 +158,10 @@ namespace Capstone_Reference_Game.Form
                     // 눌린 키를 서버에 알려줌
                     GameManager.SendMessage(generator.Generate());
                 }
+            }
+            else
+            {
+                return base.ProcessCmdKey(ref msg, keyData);
             }
             return true;
         }

@@ -114,16 +114,25 @@ namespace Capstone_Reference_GameServer
         // 클라이언트가 전송한 정답 처리
         private void AnswerProcess(ClientCharacter client, MessageConverter converter)
         {
-            int answer = converter.NextInt();
-
+            object answer;
+            if (serverManager.Configuration.QuizType == QuizTypes.DESCRIPTIVE_QUIZ)
+            {
+                answer = converter.NextString();
+            }
+            else
+            {
+                answer = converter.NextInt();
+            }
             // 결과창 가져옴
             GameResult_Screen? control = serverManager.ServerForm.Controls["GameResult_Screen"] as GameResult_Screen;
-            if(control != null)
+            if (control != null)
             {
                 control.AddResult(client.StudentID, client.StudentName, answer);
             }
             
+            
         }
+
 
     }
 }

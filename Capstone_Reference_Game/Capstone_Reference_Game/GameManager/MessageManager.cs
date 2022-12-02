@@ -134,6 +134,13 @@ namespace Capstone_Reference_Game.Manager
                 int time = converter.NextInt();
                 int currentTime = converter.NextInt();
 
+                GameConfiguration config = new GameConfiguration()
+                {
+                    Time = time,
+                    Title = title,
+                    QuizType = quizType
+                };
+
                 List<string>? questions = null;
                 if(quizType == QuizTypes.MULTIPLE_QUIZ)
                 {
@@ -144,9 +151,10 @@ namespace Capstone_Reference_Game.Manager
                     {
                         questions.Add(converter.NextString());
                     }
+                    config.Questions = questions;
                 }
 
-                gameManager.MainForm.GameStart(quizType, title, time, currentTime ,questions);
+                gameManager.MainForm.GameStart(config ,currentTime);
             }
 
             // 다른 클라이언트의 키 입력 처리
@@ -186,7 +194,10 @@ namespace Capstone_Reference_Game.Manager
             // 게임이 종료됨. 자신의 정답을 서버로 반환
             private void GameEnd()
             {
-                gameManager.SendMyAnswer();
+                if (gameManager.MainForm.UserCharacter != null)
+                {
+                    gameManager.SendMyAnswer();
+                }
                 Application.Exit();
             }
 
