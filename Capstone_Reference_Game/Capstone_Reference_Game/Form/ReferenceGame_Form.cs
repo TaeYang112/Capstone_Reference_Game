@@ -56,6 +56,8 @@ namespace Capstone_Reference_Game.Form
         private void ReferecneGame_Form_Load(object sender, EventArgs e)
         {
             GameManager.Start();
+            this.Activate();
+            this.BringToFront();
         }
         
         private void LocationSync(object? o)

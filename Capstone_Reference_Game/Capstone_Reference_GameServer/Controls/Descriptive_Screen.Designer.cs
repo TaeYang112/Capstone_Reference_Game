@@ -35,18 +35,23 @@
             this.lbl_Context = new Capstone_Reference_GameServer.Controls.BufferedLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.lbl_Name = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.pnl_underTitle = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbl_Title
             // 
+            this.lbl_Title.AutoSize = true;
             this.lbl_Title.Font = new System.Drawing.Font("웰컴체 Regular", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Title.Location = new System.Drawing.Point(0, 0);
+            this.lbl_Title.Location = new System.Drawing.Point(0, 12);
+            this.lbl_Title.MaximumSize = new System.Drawing.Size(545, 0);
             this.lbl_Title.Name = "lbl_Title";
-            this.lbl_Title.Size = new System.Drawing.Size(545, 56);
+            this.lbl_Title.Size = new System.Drawing.Size(55, 27);
             this.lbl_Title.TabIndex = 2;
             this.lbl_Title.Text = "제목";
             this.lbl_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_Title.SizeChanged += new System.EventHandler(this.lbl_Title_SizeChanged);
             // 
             // lbl_ID
             // 
@@ -59,12 +64,16 @@
             // 
             // btn_Ans
             // 
+            this.btn_Ans.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.btn_Ans.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btn_Ans.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Ans.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btn_Ans.Location = new System.Drawing.Point(221, 351);
             this.btn_Ans.Name = "btn_Ans";
-            this.btn_Ans.Size = new System.Drawing.Size(80, 33);
+            this.btn_Ans.Size = new System.Drawing.Size(83, 46);
             this.btn_Ans.TabIndex = 7;
             this.btn_Ans.Text = "정답처리";
-            this.btn_Ans.UseVisualStyleBackColor = true;
+            this.btn_Ans.UseVisualStyleBackColor = false;
             // 
             // panel1
             // 
@@ -105,10 +114,28 @@
             this.lbl_Name.TabIndex = 5;
             this.lbl_Name.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(0)))), ((int)(((byte)(238)))));
+            this.panel2.Location = new System.Drawing.Point(221, 351);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(82, 5);
+            this.panel2.TabIndex = 10;
+            // 
+            // pnl_underTitle
+            // 
+            this.pnl_underTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(68)))), ((int)(((byte)(255)))));
+            this.pnl_underTitle.Location = new System.Drawing.Point(1, 41);
+            this.pnl_underTitle.Name = "pnl_underTitle";
+            this.pnl_underTitle.Size = new System.Drawing.Size(46, 3);
+            this.pnl_underTitle.TabIndex = 10;
+            // 
             // Descriptive_Screen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.pnl_underTitle);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_Ans);
@@ -134,5 +161,7 @@
         private Label label1;
         private Label lbl_Name;
         private BufferedLabel lbl_Context;
+        private Panel panel2;
+        private Panel pnl_underTitle;
     }
 }

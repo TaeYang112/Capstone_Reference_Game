@@ -14,10 +14,9 @@ namespace Capstone_Reference_GameServer.Controls
     {
         // 답안 별 제출수
         //private List<int> question_submitCounts;
-        public MultipleChart_Screen(string title, List<string> questions, int correctAnswer)
+        public MultipleChart_Screen( List<string> questions, int correctAnswer)
         {
             InitializeComponent();
-            lbl_Title.Text = title;
             for(int i = 0; i < questions.Count; i++)
             {
                 Controls["lbl_AnNum" + (i + 1)].Visible = true;
@@ -26,16 +25,23 @@ namespace Capstone_Reference_GameServer.Controls
 
                 if(i == correctAnswer-1)
                 {
-                    barGraph1.AddBar(new Bar() { Brush = Brushes.Red });
+                    // 정답 색
+                    barGraph1.AddBar(new Bar() { Brush = new SolidBrush(Color.FromArgb(120,30,255)) });
                 }
                 else
                 {
-                    barGraph1.AddBar(new Bar() { Brush = Brushes.Green });
+                    // 비정답 색
+                    barGraph1.AddBar(new Bar() { Brush = new SolidBrush(Color.FromArgb(180, 130, 255)) });
                 }
             }
             
         }
-        
+
+        public void SetTitle(string title)
+        {
+            lbl_Title.Text = title;
+        }
+
         public void AddResult(int answer)
         {
             if (answer <= 0) return; 
@@ -50,6 +56,20 @@ namespace Capstone_Reference_GameServer.Controls
         {
             Random random = new Random();
             barGraph1.AddBarValue(random.Next(0,5));
+        }
+
+        private void lbl_Title_SizeChanged(object sender, EventArgs e)
+        {
+            if (Parent != null)
+            {
+                // 제목이 가운데로 오게 함
+                int x = Parent.Width / 2 - lbl_Title.Width / 2;
+                lbl_Title.Left = x;
+
+                pnl_underTitle.Left = x;
+                pnl_underTitle.Top = lbl_Title.Top + lbl_Title.Height;
+                pnl_underTitle.Width = lbl_Title.Width;
+            }
         }
     }
 }

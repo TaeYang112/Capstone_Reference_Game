@@ -35,7 +35,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "PieGraph";
-            this.Size = new System.Drawing.Size(343, 257);
+            this.Size = new System.Drawing.Size(196, 175);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PieGraph_Paint);
             this.ResumeLayout(false);
 
         }

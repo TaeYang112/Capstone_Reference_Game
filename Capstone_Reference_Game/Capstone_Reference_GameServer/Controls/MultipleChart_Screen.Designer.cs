@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbl_Title = new System.Windows.Forms.Label();
             this.lbl_Answer1 = new System.Windows.Forms.Label();
             this.lbl_Answer2 = new System.Windows.Forms.Label();
             this.lbl_Answer3 = new System.Windows.Forms.Label();
@@ -40,17 +39,9 @@
             this.barGraph1 = new Capstone_Reference_GameServer.Controls.BarGraph();
             this.lbl_AnNum5 = new System.Windows.Forms.Label();
             this.lbl_Answer5 = new System.Windows.Forms.Label();
+            this.pnl_underTitle = new System.Windows.Forms.Panel();
+            this.lbl_Title = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // lbl_Title
-            // 
-            this.lbl_Title.Font = new System.Drawing.Font("웰컴체 Regular", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Title.Location = new System.Drawing.Point(0, 0);
-            this.lbl_Title.Name = "lbl_Title";
-            this.lbl_Title.Size = new System.Drawing.Size(545, 56);
-            this.lbl_Title.TabIndex = 2;
-            this.lbl_Title.Text = "제목";
-            this.lbl_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbl_Answer1
             // 
@@ -172,10 +163,33 @@
             this.lbl_Answer5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lbl_Answer5.Visible = false;
             // 
+            // pnl_underTitle
+            // 
+            this.pnl_underTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(68)))), ((int)(((byte)(255)))));
+            this.pnl_underTitle.Location = new System.Drawing.Point(1, 41);
+            this.pnl_underTitle.Name = "pnl_underTitle";
+            this.pnl_underTitle.Size = new System.Drawing.Size(46, 3);
+            this.pnl_underTitle.TabIndex = 12;
+            // 
+            // lbl_Title
+            // 
+            this.lbl_Title.AutoSize = true;
+            this.lbl_Title.Font = new System.Drawing.Font("웰컴체 Regular", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Title.Location = new System.Drawing.Point(0, 12);
+            this.lbl_Title.MaximumSize = new System.Drawing.Size(545, 0);
+            this.lbl_Title.Name = "lbl_Title";
+            this.lbl_Title.Size = new System.Drawing.Size(55, 27);
+            this.lbl_Title.TabIndex = 11;
+            this.lbl_Title.Text = "제목";
+            this.lbl_Title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_Title.SizeChanged += new System.EventHandler(this.lbl_Title_SizeChanged);
+            // 
             // MultipleChart_Screen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.pnl_underTitle);
+            this.Controls.Add(this.lbl_Title);
             this.Controls.Add(this.lbl_Answer5);
             this.Controls.Add(this.barGraph1);
             this.Controls.Add(this.lbl_AnNum5);
@@ -187,17 +201,15 @@
             this.Controls.Add(this.lbl_Answer3);
             this.Controls.Add(this.lbl_Answer2);
             this.Controls.Add(this.lbl_Answer1);
-            this.Controls.Add(this.lbl_Title);
             this.Name = "MultipleChart_Screen";
             this.Size = new System.Drawing.Size(545, 400);
             this.Load += new System.EventHandler(this.MultipleChart_Screen_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private Label lbl_Title;
         private Label lbl_Answer1;
         private Label lbl_Answer2;
         private Label lbl_Answer3;
@@ -209,5 +221,7 @@
         private BarGraph barGraph1;
         private Label lbl_AnNum5;
         private Label lbl_Answer5;
+        private Panel pnl_underTitle;
+        private Label lbl_Title;
     }
 }

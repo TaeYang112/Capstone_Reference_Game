@@ -34,19 +34,22 @@ namespace Capstone_Reference_GameServer.Controls
             GameConfiguration config = serverForm.GameServerManager.Configuration;
             if (config.QuizType == QuizTypes.OX_QUIZ)
             {
-                OXChart_Screen oxChart = new OXChart_Screen(config.Title);
+                OXChart_Screen oxChart = new OXChart_Screen(config.Answer);
                 pnl_Chart.Controls.Add(oxChart);
+                oxChart.SetTitle(config.Title);
             }
             else if (config.QuizType == QuizTypes.MULTIPLE_QUIZ)
             {
-                MultipleChart_Screen multiChart = new MultipleChart_Screen(config.Title, config.Questions, config.Answer);
+                MultipleChart_Screen multiChart = new MultipleChart_Screen(config.Questions, config.Answer);
                 pnl_Chart.Controls.Add(multiChart);
+                multiChart.SetTitle(config.Title);
             }
             else if(config.QuizType == QuizTypes.DESCRIPTIVE_QUIZ)
             {
                 grid_Result.Columns[2].Visible = false;
-                Descriptive_Screen descrip = new Descriptive_Screen(config.Title);
+                Descriptive_Screen descrip = new Descriptive_Screen();
                 pnl_Chart.Controls.Add(descrip);
+                descrip.SetTitle(config.Title);
 
                 descrip.btn_Ans.Click += AnswerButtonClick;
             }
@@ -75,6 +78,7 @@ namespace Capstone_Reference_GameServer.Controls
             timer.Enabled = false;
             lbl_Time.Text = TimeToString(0);
             btn_GameStop.Enabled = false;
+            btn_GameStop.Text = "종료됨";
         }
 
         public void AddResult(string studentId, string studentName, object answer)
@@ -163,6 +167,7 @@ namespace Capstone_Reference_GameServer.Controls
             {
                 timer.Enabled = false;
                 btn_GameStop.Enabled = false;
+                btn_GameStop.Text = "종료됨";
             }
         }
 
@@ -233,5 +238,6 @@ namespace Capstone_Reference_GameServer.Controls
 
             }));
         }
+
     }
 }

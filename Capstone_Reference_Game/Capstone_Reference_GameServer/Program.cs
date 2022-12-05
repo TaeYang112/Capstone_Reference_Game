@@ -32,7 +32,7 @@ namespace Capstone_Reference_GameServer
                 Time = 100,
                 Answer = 1,
                 QuizType = QuizTypes.MULTIPLE_QUIZ,
-                Questions = new List<string>() { "11", "22", "33" }
+                Questions = new List<string>() { "1번문제", "2번문제", "3번문제" }
             };
 
             GameConfiguration config3 = new GameConfiguration()
@@ -42,7 +42,7 @@ namespace Capstone_Reference_GameServer
                 QuizType = QuizTypes.DESCRIPTIVE_QUIZ
             };
 
-            GameServerForm GameServerForm = new GameServerForm(config3);
+            GameServerForm GameServerForm = new GameServerForm(config);
             GameServerForm.Start();
             Application.Run(GameServerForm);
         }

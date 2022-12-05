@@ -12,38 +12,96 @@ namespace Capstone_Reference_GameServer.Controls
 {
     public partial class OXChart_Screen : UserControl
     {
-        private int O_count = 0;
-        private int X_count = 0;
-        public OXChart_Screen(string title)
+        private int oValue = 0;
+        private int xValue = 0;
+
+        public OXChart_Screen(int correctAnswer)
         {
             InitializeComponent();
-            this.lbl_Title.Text = title;
-            new BarGraph();
+
+            Brush AnswerBrush = new SolidBrush(Color.FromArgb(120, 30, 255));
+            Brush NotAnswerBrush = new SolidBrush(Color.FromArgb(180, 130, 255));
+
+            // O가 정답
+            if (correctAnswer == 1)
+            {
+                pieGraph1.OBrush = AnswerBrush;
+                pnl_OColor.BackColor = Color.FromArgb(120, 30, 255);
+
+                pieGraph1.XBrush = NotAnswerBrush;
+                pnl_XColor.BackColor = Color.FromArgb(180, 130, 255);
+            }
+            // X가 정답
+            else
+            {
+                pieGraph1.XBrush = AnswerBrush;
+                pnl_XColor.BackColor = Color.FromArgb(120, 30, 255);
+
+                pieGraph1.OBrush = NotAnswerBrush;
+                pnl_OColor.BackColor = Color.FromArgb(180, 130, 255);
+            }
         }
 
         private void OXChart_Screen_Load(object sender, EventArgs e)
         {
-            
+        }
+
+        public void SetTitle(string title)
+        {
+            lbl_Title.Text = title;
         }
 
         public void AddResult(int answer)
         {
-            if(answer == 1) O_count++;
-            else if(answer == 2) X_count++;
+            if (answer == 1)
+            {
+                oValue++;
+                pieGraph1.OValue = oValue;
+            }
+            else if (answer == 2)
+            {
+                xValue++;
+                pieGraph1.XValue = xValue;
+            }
+            UpdateLegend();
 
-            int size;
-            int sum = O_count + X_count;
+        }
+
+        // 범례 (legend) 내용 업데이트
+        private void UpdateLegend()
+        {
+            // 합
+            int sum = xValue + oValue;
+
+            // 비율
+            float oRatio;
             if (sum == 0)
-                size = 100;
+            {
+                oRatio = 0.5f;
+            }
             else
             {
-                size = (int)(200 * ((float)O_count / sum));
+                oRatio = (float)oValue / sum;
             }
-            Invoke(new Action(() =>
+
+            lbl_oRatio.Text = ((int)(oRatio * 100)).ToString() + "%";
+            lbl_xRatio.Text = ((int)((1 - oRatio) * 100)).ToString() + "%";
+
+        }
+
+
+        private void lbl_Title_SizeChanged(object sender, EventArgs e)
+        {
+            if (Parent != null)
             {
-                pnl_OChart.Size = new Size(size, pnl_OChart.Size.Height);
+                // 제목이 가운데로 오게 함
+                int x = Parent.Width / 2 - lbl_Title.Width / 2;
+                lbl_Title.Left = x;
+
+                pnl_underTitle.Left = x;
+                pnl_underTitle.Top = lbl_Title.Top + lbl_Title.Height;
+                pnl_underTitle.Width = lbl_Title.Width;
             }
-            ));
         }
 
     }
