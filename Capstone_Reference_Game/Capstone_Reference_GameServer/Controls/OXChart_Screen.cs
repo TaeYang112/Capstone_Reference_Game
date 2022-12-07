@@ -84,8 +84,12 @@ namespace Capstone_Reference_GameServer.Controls
                 oRatio = (float)oValue / sum;
             }
 
-            lbl_oRatio.Text = ((int)(oRatio * 100)).ToString() + "%";
-            lbl_xRatio.Text = ((int)((1 - oRatio) * 100)).ToString() + "%";
+            this.Invoke(new Action(delegate ()
+            {
+                lbl_oRatio.Text = ((int)(oRatio * 100)).ToString() + "%";
+                lbl_xRatio.Text = ((int)((1 - oRatio) * 100)).ToString() + "%";
+            }
+            ));
 
         }
 

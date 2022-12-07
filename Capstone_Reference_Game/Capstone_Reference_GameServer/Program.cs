@@ -20,7 +20,7 @@ namespace Capstone_Reference_GameServer
             ApplicationConfiguration.Initialize();
             GameConfiguration config = new GameConfiguration()
             {
-                Title = "집가고싶어",
+                Title = "C언어는 객체지향 언어이다.",
                 Time = 30,
                 Answer = 1,
                 QuizType = QuizTypes.OX_QUIZ
