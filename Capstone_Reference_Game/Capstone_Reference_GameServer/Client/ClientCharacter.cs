@@ -19,7 +19,7 @@ namespace Capstone_Reference_GameServer.Client
         public int Skin { get; set; } = 0;
 
         public string StudentID { get; set; } = string.Empty;
-        public string StudentName { get; set; } = String.Empty;
+        public string StudentName { get; set; } = "GUEST";
 
         public Point Location { get; set; }
 
