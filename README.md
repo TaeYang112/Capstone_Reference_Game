@@ -1,9 +1,7 @@
 # Capstone_Reference_Game
-유한대학교 캡스톤 프로젝트 Reference 팀
+유한대학교 캡스톤 Reference팀의 '수업 보조 프로젝트'에 사용되는 질문게임 모듈을 위한 프로젝트입니다.<br>
 
-# 소개
-유한대학교 캡스톤 Reference팀의 '수업 보조 프로젝트'에 사용되는 질문게임 모듈을 위한 프로젝트입니다.<br><br>
-
+## Summary
 교수는 OX퀴즈, 객관식, 주관식의 문제를 낼 수 있으며, OX퀴즈와 객관식은 학생은 캐릭터를 움직여 답을 고를 수 있습니다.<br>
 또한 교수와 학생은 자신 이외의 학생이 어떤 답을 고르는중인지 캐릭터를 통해 확인할 수 있습니다. <br>
 <br>
@@ -31,12 +29,6 @@
 서술형 문제는 학생 목록에서 직접 클릭하여 학생이 제출한 답을 확인할 수 있습니다.
 
 ![image](https://user-images.githubusercontent.com/80028960/206932479-10ceb7e0-2285-4df9-859b-1579ac024672.png)
-
-
-
-## Reference
-유한대학교 캡스톤 프로젝트  </br>
-Reference 팀 </br>
 
 ## Contributors
 | 담당자 | 업무 | git| E_mail |
@@ -71,48 +63,3 @@ Reference 팀 </br>
 문답 모듈 <br>
 담당자 : 이태양 </br>
 
-## Summary
-강의실 학습 지원 프로그램 </br>
-수업 진행에 도움을 줄 수 있는 수업 보조 프로그램
-1. 채팅</br>
-    교수와 학생이 자유롭게 채팅을 통해 대화할 수 있는 기능
-    * 전체 채팅
-    * 귓속말
-2. 질문</br>
-    교수자가 학생들의 참여를 유도하기위해 문제를 출제하는 기능
-    * O/X 퀴즈
-    * 객관식 퀴즈
-    * 주관식 퀴즈
-3. 구글 업로드 필기노트</br>
-    학생들이 수업시간 중 필기를 할 수 있게 한 필기노트
-    * 그리기 (원, 사각형, 텍스트, 펜, 형광펜 등)
-    * 교수자 화면 캡쳐
-    * 그림파일 저장
-    * 구글 드라이브 업로드
-4. 제어기능
-    교수자 및 학생이 사용가능한 편의기능
-    * 접속 유저 확인
-    * 강퇴
-    * 클라이언트 제어 기능
-
-
-## 느낀점, 후기
-| 유영주 | |
-| :--- | :---: |
-| 이무현 |  |
-| 이종수 |  |
-| 이태양 |  |
-| 장 진 |  |
-| 편성윤 |  |
-| 김예지 |  |
-| 김선화 |  |
-| 김태산 |  |
-
-## [Image](https://github.com/PyunSungYun/Capstone_Reference_main/tree/main/image)
-<image src="./image/접속유형선택.png"></impage>
-<image src="./image/메인_교수.png"></impage>
-<image src="./image/채팅.png"></impage>
-<image src="./image/학생관리.png"></impage>
-<image src="./image/질문_객관식.png"></impage>
-<image src="./image/질문_객관식결과.png"></impage>
-<image src="./image/필기노트.png"></impage>
