@@ -63,5 +63,3 @@
 문답 모듈 <br>
 담당자 : 이태양 </br>
 
-## [Image](https://github.com/PyunSungYun/Capstone_Reference_main/tree/main/image)
-
