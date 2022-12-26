@@ -1,9 +1,7 @@
 # Capstone_Reference_Game
-유한대학교 캡스톤 프로젝트 Reference 팀
+유한대학교 캡스톤 Reference팀의 '수업 보조 프로젝트'에 사용되는 질문게임 모듈을 위한 프로젝트입니다.<br>
 
-# 소개
-유한대학교 캡스톤 Reference팀의 '수업 보조 프로젝트'에 사용되는 질문게임 모듈을 위한 프로젝트입니다.<br><br>
-
+## Summary
 교수는 OX퀴즈, 객관식, 주관식의 문제를 낼 수 있으며, OX퀴즈와 객관식은 학생은 캐릭터를 움직여 답을 고를 수 있습니다.<br>
 또한 교수와 학생은 자신 이외의 학생이 어떤 답을 고르는중인지 캐릭터를 통해 확인할 수 있습니다. <br>
 <br>
@@ -32,8 +30,6 @@
 
 ![image](https://user-images.githubusercontent.com/80028960/206932479-10ceb7e0-2285-4df9-859b-1579ac024672.png)
 
-
-
 ## Contributors
 | 담당자 | 업무 | git| E_mail |
 | :--- | :---: | :---: | :---: |
@@ -43,48 +39,29 @@
 | 이태양 | Server | [ycs-201807027](https://github.com/ycs-201807027) | xodid4025@naver.com |
 | 장 진 | Server | [ycs-202007064](https://github.com/ycs-202007064) | 1602spam@naver.com |
 | 편성윤 | Client | [PyunSungYun](https://github.com/PyunSungYun) | psy7217@naver.com |
-| 김예지 | Client | [Yeji](https://github.com/) | Kimyeji0042@naver.com |
-| 김선화 | Client | [PyunSungYun](https://github.com/) | thsghk18@naver.com |
-| 김태산 | Client | [PyunSungYun](https://github.com/) | ursceal@naver.com |
+| 김예지 | Client | [ycs-202007052](https://github.com/ycs-202007052) | Kimyeji0042@naver.com |
+| 김선화 | Client | [](https://github.com/) | thsghk18@naver.com |
+| 김태산 | Client | [](https://github.com/) | ursceal@naver.com |
 
-## Capstone_Reference
-[Capstone_Reference](https://github.com/PyunSungYun/Capstone_Reference)  </br>
+## [Capstone_Reference](https://github.com/PyunSungYun/Capstone_Reference)
 메인 레퍼지토리 <br>
 담당자 : 편성윤 </br>
 
-## Capstone_Reference_Client
-[Capstone_Reference_Client](https://github.com/1602spam/Capstone_Reference_Client)</br>
-Client </br>
-담당자 : 장진, 김예지, 이종수, 이무현, 유영주, 김선화 </br>
+## [Capstone_Reference_Client](https://github.com/1602spam/Capstone_Reference_Client)
+클라이언트 모듈 </br>
+담당자 : 장진, 김예지, 이종수, 이무현, 유영주, 김선화, 이태양 </br>
 
-## Capstone_Reference_Server
-[Capstone_Reference_Server](https://github.com/ycs-201807062/Capstone_Reference_Server)</br>
-Server <br>
+## [Capstone_Reference_Server](https://github.com/ycs-201807062/Capstone_Reference_Server)
+서버 모듈<br>
 담당자 : 이무현 </br>
 
-## Capstone_Reference_Network
-[Capstone_Reference_Network](https://github.com/poro912/Capstone_Reference_Network)</br>
-소켓 통신을 활용한 네트워크 프로그램 <br>
+## [Capstone_Reference_Network](https://github.com/poro912/Capstone_Reference_Network)
+소켓 통신을 활용한 네트워크 모듈 <br>
 담당자 : 이무현, 편성윤 </br>
 
-## Capstone_Reference_Game
-[Capstone_Reference_Game](https://github.com/ycs-201807027/Capstone_Reference_Game)</br>
-질문 게임 <br>
+## [Capstone_Reference_Game](https://github.com/ycs-201807027/Capstone_Reference_Game)
+문답 모듈 <br>
 담당자 : 이태양 </br>
 
-## Capstone_Reference_Game
-[Capstone_Reference_Client_module](https://github.com/ycs-202007051/Capstone_Reference_Client_module)</br>
-Client_Module   </br>
-담당자 : </br>
+## [Image](https://github.com/PyunSungYun/Capstone_Reference_main/tree/main/image)
 
-## 느낀점, 후기
-| 유영주 | |
-| :--- | :---: |
-| 이무현 |  |
-| 이종수 |  |
-| 이태양 |  |
-| 장 진 |  |
-| 편성윤 |  |
-| 김예지 |  |
-| 김선화 |  |
-| 김태산 |  |
